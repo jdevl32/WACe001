@@ -40,6 +40,19 @@ label
 #mainWrapper
 {
 	margin: 0 0 0 300px;
+	-ms-transition: margin-left ease .25s;
+	-o-transition: margin-left ease .25s;
+	-webkit-transition: margin-left ease .25s;
+	transition: margin-left ease .25s;
+}
+
+#mainWrapper.hide-sidebar
+{
+	margin-left: 0;
+	-ms-transition: margin-left ease .25s;
+	-o-transition: margin-left ease .25s;
+	-webkit-transition: margin-left ease .25s;
+	transition: margin-left ease .25s;
 }
 
 #sidebar
@@ -49,7 +62,20 @@ label
 	margin: 0;
 	overflow: hidden;
 	position: fixed;
+	-ms-transition: width ease .25s;
+	-o-transition: width ease .25s;
+	-webkit-transition: width ease .25s;
+	transition: width ease .25s;
 	width: 300px;
+}
+
+#sidebar.hide-sidebar
+{
+	width: 0;
+	-ms-transition: width ease .25s;
+	-o-transition: width ease .25s;
+	-webkit-transition: width ease .25s;
+	transition: width ease .25s;
 }
 
 #sidebar #menu li
