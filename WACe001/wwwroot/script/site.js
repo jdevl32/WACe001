@@ -5,25 +5,33 @@
 (
 	function ()
 	{
-		var fullName = document.getElementById("fullName");
+		var fullName = $("#fullName");
 
-		if (!isNullOrUndefined(fullName) && !isNullOrUndefined(fullName.innerHTML))
+		if (!isNullOrUndefined(fullName) && !isNullOrUndefined(fullName.text))
 		{
-			fullName.innerHTML = "JavaScript Name";
+			fullName.text("JavaScript Name");
 		} // if
 
-		var main = document.getElementById("main");
+		var main = $("#main");
 
-		main.onmouseenter =
-			function()
-			{
-				this.style.backgroundColor = "#aaa";
-			};
+		main.on
+			(
+				"mouseenter"
+				,
+				function()
+				{
+					this.style.backgroundColor = "#aaa";
+				}
+			);
 
-		main.onmouseleave =
-			function()
-			{
-				this.style.backgroundColor = "";
-			};
+		main.on
+			(
+				"mouseleave"
+				,
+				function()
+				{
+					this.style.backgroundColor = "";
+				}
+			);
 	}
 )();
