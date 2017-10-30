@@ -1,27 +1,29 @@
 ﻿// site.js
 
-function doLoad()
-{
-	var fullName = document.getElementById("fullName");
+"use script";
 
-	if (!isNullOrUndefined(fullName) && !isNullOrUndefined(fullName.innerHTML))
+(
+	function ()
 	{
-		fullName.innerHTML = "JavaScript Name";
-	} // if
+		var fullName = document.getElementById("fullName");
 
-	var main = document.getElementById("main");
-
-	main.onmouseenter =
-		function()
+		if (!isNullOrUndefined(fullName) && !isNullOrUndefined(fullName.innerHTML))
 		{
-			this.style.backgroundColor = "#aaa";
-		};
+			fullName.innerHTML = "JavaScript Name";
+		} // if
 
-	main.onmouseleave =
-		function()
-		{
-			this.style.backgroundColor = "";
-		};
-}
+		var main = document.getElementById("main");
 
-doLoad();
+		main.onmouseenter =
+			function()
+			{
+				this.style.backgroundColor = "#aaa";
+			};
+
+		main.onmouseleave =
+			function()
+			{
+				this.style.backgroundColor = "";
+			};
+	}
+)();
