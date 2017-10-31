@@ -34,17 +34,17 @@
 				}
 		);
 
-		var $menuLinks = $("ul#menu li a");
+		//var $menuLinks = $("ul#menu li a");
 
-		$menuLinks.on
-			(
-				"click"
-				,
-				function()
-				{
-					window.alert(($(this)).text());
-				}
-			);
+		//$menuLinks.on
+		//	(
+		//		"click"
+		//		,
+		//		function()
+		//		{
+		//			window.alert(($(this)).text());
+		//		}
+		//	);
 
 		var $sidebarToggle = $("#sidebarToggle");
 		var $toggle = $("#mainWrapper, #sidebar");
