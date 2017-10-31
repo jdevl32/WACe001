@@ -9,6 +9,18 @@ namespace WACe001.Controller.Web
 	{
 
 		// GET: /<controller>/
+		public IActionResult About()
+		{
+			return View();
+		}
+
+		// GET: /<controller>/
+		public IActionResult Contact()
+		{
+			return View();
+		}
+
+		// GET: /<controller>/
 		public IActionResult Index()
 		{
 			return View();
