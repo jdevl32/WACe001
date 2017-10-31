@@ -10,30 +10,31 @@
 	<title>WACe001 - @ViewBag.Title</title>
 </head>
 <body>
-<div>
-	<div id="sidebar">
-		<img class="userIcon" alt="Aww, it's you!" src="~/media/secret-user.png"/>
-		<span id="fullName">Your Name</span>
-		<ul id="menu">
-			<li class="active"><a asp-controller="App" asp-action="Index">Home</a></li>
-			<li><a asp-controller="App" asp-action="About">About</a></li>
-			<li><a asp-controller="App" asp-action="Contact">Contact</a></li>
-		</ul>
-	</div>
-	<div id="mainWrapper">
-		<header>
-			<button id="sidebarToggle">Hide Sidebar</button>
-		</header>
-		<div id="main">
-			@RenderBody()
+	<div>
+		<div id="sidebar">
+			<img class="userIcon" alt="Aww, it's you!" src="~/media/secret-user.png"/>
+			<span id="fullName">Your Name</span>
+			<ul id="menu">
+				<li class="active"><a asp-controller="App" asp-action="Index">Home</a></li>
+				<li><a asp-controller="App" asp-action="About">About</a></li>
+				<li><a asp-controller="App" asp-action="Contact">Contact</a></li>
+			</ul>
 		</div>
-		<footer>
-			<p>&copy; Foot-in-mouth disease.</p>
-		</footer>
+		<div id="mainWrapper">
+			<header>
+				<button id="sidebarToggle">Hide Sidebar</button>
+			</header>
+			<div id="main">
+				@RenderBody()
+			</div>
+			<footer>
+				<p>&copy; Foot-in-mouth disease.</p>
+			</footer>
+		</div>
 	</div>
-</div>
-<script language="javascript" src="~/lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
-<script language="javascript" src="~/script/global.js" type="text/javascript"></script>
-<script language="javascript" src="~/script/site.js" type="text/javascript"></script>
+	<script language="javascript" src="~/lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
+	<script language="javascript" src="~/script/global.js" type="text/javascript"></script>
+	<script language="javascript" src="~/script/site.js" type="text/javascript"></script>
+	@RenderSection("script", false)
 </body>
 </html>

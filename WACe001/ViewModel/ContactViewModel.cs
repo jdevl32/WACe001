@@ -1,4 +1,5 @@
-﻿using WACe001.Interface;
+﻿using System.ComponentModel.DataAnnotations;
+using WACe001.Interface;
 
 namespace WACe001.ViewModel
 {
@@ -8,10 +9,15 @@ namespace WACe001.ViewModel
 		IContact
 	{
 
+		[Required]
 		public string Name { get; set; }
 
+		[Required]
+		[EmailAddress]
 		public string Email { get; set; }
 
+		[Required]
+		[StringLength(4096, MinimumLength = 10)]
 		public string Message { get; set; }
 
 	}
