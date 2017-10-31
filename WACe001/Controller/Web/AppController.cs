@@ -1,13 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WACe001.Service.Interface;
 using WACe001.ViewModel;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WACe001.Controller.Web
 {
 
-	public class AppController : Microsoft.AspNetCore.Mvc.Controller
+	public class AppController
+		:
+		Microsoft.AspNetCore.Mvc.Controller
 	{
+
+#region Property
+
+		private IMailService MailService { get; }
+
+#endregion
+
+#region Instance Initialization
+
+		public AppController(IMailService mailService)
+		{
+			MailService = mailService;
+		}
+
+#endregion
 
 		// GET: /<controller>/
 		public IActionResult About()
@@ -24,6 +40,7 @@ namespace WACe001.Controller.Web
 		[HttpPost]
 		public IActionResult Contact(ContactViewModel model)
 		{
+			MailService.SendMail("someone@somewhere.com", model.Email, model.Name, model.Message);
 			return View();
 		}
 
