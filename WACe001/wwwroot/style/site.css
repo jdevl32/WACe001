@@ -2,23 +2,6 @@
 	site.css
 **/
 
-footer
-{
-	background-color: #222;
-	bottom: 0;
-	color: #ddd;
-	padding: 3px;
-	position: fixed;
-	width: 100%;
-}
-
-#main
-{
-	background-color: #ddd;
-	color: #222;
-	padding: 3px;
-}
-
 #mainWrapper
 {
 	margin: 0 0 0 300px;
