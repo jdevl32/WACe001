@@ -13,23 +13,46 @@
 		<div id="sidebar">
 			<img class="userIcon" alt="Aww, it's you!" src="~/media/secret-user.png"/>
 			<span id="fullName">Your Name</span>
-			<ul id="menu">
+			<ul id="menu" class="nav">
 				<li class="active"><a asp-controller="App" asp-action="Index">Home</a></li>
 				<li><a asp-controller="App" asp-action="About">About</a></li>
 				<li><a asp-controller="App" asp-action="Contact">Contact</a></li>
 			</ul>
 		</div>
 		<div id="mainWrapper">
-			<header>
-				<button id="sidebarToggle" class="btn btn-primary">
-					<i class="fa fa-angle-left"></i>
-				</button>
+			<header class="container-fluid">
+				<nav class="navbar navbar-inverse">
+					<div class="container-fluid">
+						<ul class="nav navbar-nav navbar-left">
+							<li>
+								<button id="sidebarToggle" class="btn btn-primary">
+									<i class="fa fa-angle-left"></i>
+								</button>
+							</li>
+						</ul>
+						<a asp-controller="App" asp-action="Index" class="navbar-brand">E.T., phone home!</a>
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a href="#" class="btn btn-small btn-info">
+									<i class="fa fa-print"></i> Print
+								</a>
+							</li>
+							<li>
+								<a href="#" class="btn btn-small btn-info">
+									<i class="fa fa-save"></i> Save
+								</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
 			</header>
-			<div id="main">
+			<div id="main" class="container-fluid">
 				@RenderBody()
 			</div>
-			<footer>
-				<p class="text-primary">&copy; Foot-in-mouth disease.</p>
+			<footer class="container-fluid">
+				<nav class="navbar-inverse navbar-fixed-bottom">
+					<h5 class="text-center text-info">&copy; Foot-in-mouth disease.</h5>
+				</nav>
 			</footer>
 		</div>
 	</div>
