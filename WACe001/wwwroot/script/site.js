@@ -34,22 +34,10 @@
 				}
 		);
 
-		//var $menuLinks = $("ul#menu li a");
-
-		//$menuLinks.on
-		//	(
-		//		"click"
-		//		,
-		//		function()
-		//		{
-		//			window.alert(($(this)).text());
-		//		}
-		//	);
-
-		var $sidebarToggle = $("#sidebarToggle");
 		var $toggle = $("#mainWrapper, #sidebar");
+		var $angle = $("#sidebarToggle i.fa");
 
-		$sidebarToggle.on
+		$("#sidebarToggle").on
 			(
 				"click"
 				,
@@ -59,15 +47,15 @@
 
 					$toggle.toggleClass(hideSidebar);
 
-					var $this = $(this);
-
 					if ($toggle.hasClass(hideSidebar))
 					{
-						$this.text("Show Sidebar");
+						$angle.removeClass("fa-angle-left");
+						$angle.addClass("fa-angle-right");
 					} // if
 					else
 					{
-						$this.text("Hide Sidebar");
+						$angle.removeClass("fa-angle-right");
+						$angle.addClass("fa-angle-left");
 					} // else
 				}
 			);
