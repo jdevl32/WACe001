@@ -19,6 +19,7 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
+        "Contact__Email__To": "over@ride.com",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:59709/"

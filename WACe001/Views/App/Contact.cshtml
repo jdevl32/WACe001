@@ -14,7 +14,13 @@
 <h2>Drop Us A Line</h2>
 
 <form method="post">
-	<span asp-validation-summary="ModelOnly"></span>
+	<div asp-validation-summary="ModelOnly"></div>
+	
+	@if (!string.IsNullOrWhiteSpace(ViewBag.UserMessage))
+	{
+		<div>@ViewBag.UserMessage</div>
+	}
+
 	<label asp-for="Name">Who are you?</label>
 	<input asp-for="Name" type="text"/>
 	<span asp-validation-for="Name"></span>

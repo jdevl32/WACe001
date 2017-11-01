@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WACe001.Service;
 using WACe001.Service.Interface;
@@ -12,6 +13,8 @@ namespace WACe001
 
 #region Property
 
+		private IConfigurationRoot ConfigurationRoot { get; set; }
+
 		private IHostingEnvironment HostingEnvironment { get; }
 
 #endregion
@@ -20,10 +23,13 @@ namespace WACe001
 
 		public Startup(IHostingEnvironment hostingEnvironment)
 		{
+			ConfigurationRoot = BuildConfiguration(hostingEnvironment);
 			HostingEnvironment = hostingEnvironment;
 		}
 
 #endregion
+
+		private static IConfigurationRoot BuildConfiguration(IHostingEnvironment hostingEnvironment) => new ConfigurationBuilder().SetBasePath(hostingEnvironment.ContentRootPath).AddJsonFile("Config/appsettings.json").AddEnvironmentVariables().Build();
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -40,6 +46,8 @@ namespace WACe001
 			{
 				// todo: implement real mail service...
 			} // else
+
+			services.AddSingleton(ConfigurationRoot);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,17 +58,10 @@ namespace WACe001
 				app.UseDeveloperExceptionPage();
 			}
 
-			//app.Run(async (context) =>
-			//{
-			//	await context.Response.WriteAsync("What up!");
-			//});
-
-			//app.UseDefaultFiles();
-
 			app.UseMvc(builder => builder.MapRoute(name: "Default", template: "{controller}/{action}/{id?}", defaults: new {controller = "App", action = "Index"}));
 			app.UseStaticFiles();
 		}
-		
+
 	}
-	
+
 }
