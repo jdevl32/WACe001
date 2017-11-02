@@ -1,4 +1,4 @@
-﻿namespace WACe001.Interface
+﻿namespace WACe001.Model.Interface
 {
 
 	public interface IContact

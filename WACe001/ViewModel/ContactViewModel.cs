@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using WACe001.Interface;
+using WACe001.Model.Interface;
 
 namespace WACe001.ViewModel
 {
