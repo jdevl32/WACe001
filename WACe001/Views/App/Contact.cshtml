@@ -23,17 +23,24 @@
 				<div>@ViewBag.UserMessage</div>
 			}
 
-			<label asp-for="Name">Who are you?</label>
-			<input asp-for="Name" type="text" />
-			<span asp-validation-for="Name"></span>
-			<label asp-for="Email"></label>
-			<input asp-for="Email" type="email" />
-			<span asp-validation-for="Email"></span>
-			<label asp-for="Message">What on earth do you want?</label>
-			<textarea asp-for="Message" cols="40" rows="4"></textarea>
-			<span asp-validation-for="Message"></span>
-			<div>
-				<input type="submit" value="Push me" />
+			<div class="form-group">
+				<label asp-for="Name">...And you are?</label>
+				<input class="form-control" asp-for="Name" type="text" />
+				<span class="text-muted" asp-validation-for="Name"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Email">SSN, mother's maiden name...no, email</label>
+				<input class="form-control" asp-for="Email" type="email" />
+				<span class="text-muted" asp-validation-for="Email"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Message">What on earth do you want?</label>
+				<textarea class="form-control" asp-for="Message" cols="40" rows="4"></textarea>
+				<span class="text-muted" asp-validation-for="Message"></span>
+			</div>
+			<div class="form-group">
+				<a class="btn btn-default" asp-controller="App" asp-action="Index">I'm scared, go back!</a>
+				<input class="btn btn-primary" type="submit" value="Come on, send it"/>
 			</div>
 		</form>
 	</div>

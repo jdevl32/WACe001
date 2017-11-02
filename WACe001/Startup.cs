@@ -13,7 +13,7 @@ namespace WACe001
 
 #region Property
 
-		private IConfigurationRoot ConfigurationRoot { get; set; }
+		private IConfigurationRoot ConfigurationRoot { get; }
 
 		private IHostingEnvironment HostingEnvironment { get; }
 
