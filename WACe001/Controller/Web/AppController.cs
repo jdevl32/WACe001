@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using WACe001.EntityFramework;
 using WACe001.Service.Interface;
 using WACe001.ViewModel;
 
@@ -17,14 +19,17 @@ namespace WACe001.Controller.Web
 
 		private IMailService MailService { get; }
 
+		private TravelContext TravelContext { get; }
+
 #endregion
 
 #region Instance Initialization
 
-		public AppController(IConfigurationRoot configurationRoot, IMailService mailService)
+		public AppController(IConfigurationRoot configurationRoot, IMailService mailService, TravelContext travelContext)
 		{
 			ConfigurationRoot = configurationRoot;
 			MailService = mailService;
+			TravelContext = travelContext;
 		}
 
 #endregion
@@ -63,7 +68,9 @@ namespace WACe001.Controller.Web
 		// GET: /<controller>/
 		public IActionResult Index()
 		{
-			return View();
+			var trips = TravelContext.Trips.ToList();
+
+			return View(trips);
 		}
 
 	}
