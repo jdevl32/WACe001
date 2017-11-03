@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WACe001.EntityFramework;
+using WACe001.Entity;
 using WACe001.Service;
 using WACe001.Service.Interface;
 

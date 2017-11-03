@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using WACe001.EntityFramework;
+using WACe001.Entity;
 using WACe001.Service.Interface;
 using WACe001.ViewModel;
 

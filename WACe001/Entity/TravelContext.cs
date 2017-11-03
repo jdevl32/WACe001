@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using WACe001.EntityFramework.Interface;
-using WACe001.Model.Interface;
+using WACe001.Entity.Interface;
 
-namespace WACe001.EntityFramework
+namespace WACe001.Entity
 {
 
     public class TravelContext
@@ -17,9 +16,11 @@ namespace WACe001.EntityFramework
 
 		private IConfigurationRoot ConfigurationRoot { get; }
 
-		public DbSet<IStop> Stops { get; }
+		/// <inheritdoc />
+		public DbSet<Stop> Stops { get; set; }
 
-		public DbSet<ITrip> Trips { get; }
+		/// <inheritdoc />
+		public DbSet<Trip> Trips { get; set; }
 
 #endregion
 
@@ -35,6 +36,21 @@ namespace WACe001.EntityFramework
 		{
 			base.OnConfiguring(optionsBuilder);
 			optionsBuilder.UseSqlServer(ConfigurationRoot["ConnectionStrings:TravelConnection"]);
+		}
+
+		/// <inheritdoc />
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="modelBuilder">
+		/// </param>
+		/// <remarks>
+		/// This is required to support the Coordinate composite primary key.
+		/// </remarks>
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			base.OnModelCreating(modelBuilder);
+			modelBuilder.Entity<Coordinate>().HasKey(coordinate => new { coordinate.Latitude, coordinate.Longitude });
 		}
 
 	}
