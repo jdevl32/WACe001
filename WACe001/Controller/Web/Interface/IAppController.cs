@@ -11,7 +11,7 @@ namespace WACe001.Controller.Web.Interface
 
 		IActionResult Contact();
 
-		// todo: replace with interface ???
+		// todo|jdevl32: replace with interface ???
 		IActionResult Contact(ContactViewModel model);
 
 		/// <summary>

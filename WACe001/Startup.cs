@@ -58,14 +58,14 @@ namespace WACe001
 			services.AddMvc();
 			services.AddScoped<IAppController, AppController>();
 
-			// todo: check other environment(s)
+			// todo|jdevl32: check other environment(s)
 			if (HostingEnvironment.IsDevelopment())
 			{
 				services.AddScoped<IMailService, FakeMailService>();
 			} // if
 			else
 			{
-				// todo: implement real mail service...
+				// todo|jdevl32: implement real mail service...
 			} // else
 
 			services.AddScoped<ITravelContext, TravelContext>();

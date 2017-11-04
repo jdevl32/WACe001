@@ -72,7 +72,7 @@ namespace WACe001.Controller.Web
 			return View();
 		}
 
-		// todo: replace with interface ???
+		// todo|jdevl32: replace with interface ???
 		[HttpPost]
 		public IActionResult Contact(ContactViewModel model)
 		{

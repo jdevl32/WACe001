@@ -14,14 +14,14 @@ namespace WACe001.Entity
 
 #region Property
 
-		// todo: ??? replace with inteface ???
+		// todo|jdevl32: ??? replace with inteface ???
 		private TravelContext TravelContext { get; }
 
 #endregion
 
 #region Instance Initialization
 
-		// todo: ??? replace with inteface ???
+		// todo|jdevl32: ??? replace with inteface ???
 		public TravelContextSeed(TravelContext travelContext) => TravelContext = travelContext;
 
 #endregion
@@ -43,10 +43,10 @@ namespace WACe001.Entity
 							,
 							now
 							,
-							// todo: fill username...
+							// todo|jdevl32: fill username...
 							""
 							,
-							// todo: ??? replace with inteface ???
+							// todo|jdevl32: ??? replace with inteface ???
 							new List<Stop>
 							{
 								new Stop($"Seed [{stopNames[stop++]}] Stop", stop, new Coordinate(5 + 10 * stop, 5 + 10 * stop), now.AddYears(stop - 10))
