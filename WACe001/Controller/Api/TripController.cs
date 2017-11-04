@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WACe001.Entity;
-using WACe001.Entity.Interface;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using WACe001.Repository.Interface;
+using WACe001.ViewModel;
 
 namespace WACe001.Controller.Api
 {
@@ -15,9 +15,10 @@ namespace WACe001.Controller.Api
 
 #region Instance Initialization
 
-		public TripController(ITravelRepository travelRepository)
+		/// <inheritdoc />
+		public TripController(IHostingEnvironment hostingEnvironment, ITravelRepository travelRepository)
 			:
-			base(travelRepository)
+			base(hostingEnvironment, travelRepository)
 		{
 		}
 
@@ -43,24 +44,37 @@ namespace WACe001.Controller.Api
         {
             return "value";
         }
-        
-		/// <summary>
-		/// Create a new trip.
-		/// POST: api/Trip
-		/// </summary>
-		/// <param name="trip">
-		/// 
-		/// </param>
-		/// <returns>
-		/// 
-		/// </returns>
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-        [HttpPost]
-        public IActionResult Post([FromBody]Trip trip)
+
+	    /// <summary>
+	    /// Create a new trip.
+	    /// POST: api/Trip
+	    /// </summary>
+	    /// <param name="tripViewModel">
+	    /// 
+	    /// </param>
+	    /// <returns>
+	    /// 
+	    /// </returns>
+	    /// <remarks>
+	    /// Last modification:
+	    /// Verify model state.
+	    /// Change trip parameter type from entity to view model.
+	    /// </remarks>
+	    [HttpPost]
+        public IActionResult Post([FromBody] TripViewModel tripViewModel)
 		{
-			return Ok(true);
+			if (ModelState.IsValid)
+			{
+				// todo|jdevl32: contant(s)...
+				return Created($"/api/trip/{tripViewModel.Name}", tripViewModel);
+			} // if
+
+			if (HostingEnvironment.IsDevelopment())
+			{
+				return BadRequest(ModelState);
+			} // if
+
+			return BadRequest();
 		}
         
         // PUT: api/Trip/5

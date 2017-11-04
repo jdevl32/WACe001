@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using WACe001.Controller.Api.Interface;
 using WACe001.Repository.Interface;
 
@@ -13,13 +14,32 @@ namespace WACe001.Controller.Api
 
 #region Property
 
+		protected IHostingEnvironment HostingEnvironment { get; }
+
 		protected ITravelRepository TravelRepository { get; }
 
 #endregion
 
 #region Instance Initialization
 
-		protected ApiControllerBase(ITravelRepository travelRepository) => TravelRepository = travelRepository;
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="hostingEnvironment">
+		/// 
+		/// </param>
+		/// <param name="travelRepository">
+		/// 
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// Add hosting environment.
+		/// </remarks>
+		protected ApiControllerBase(IHostingEnvironment hostingEnvironment, ITravelRepository travelRepository)
+		{
+			HostingEnvironment = hostingEnvironment;
+			TravelRepository = travelRepository;
+		}
 
 #endregion
 

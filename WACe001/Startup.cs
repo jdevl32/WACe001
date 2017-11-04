@@ -12,6 +12,8 @@ using WACe001.Repository;
 using WACe001.Repository.Interface;
 using WACe001.Service;
 using WACe001.Service.Interface;
+using WACe001.ViewModel;
+using WACe001.ViewModel.Interface;
 
 namespace WACe001
 {
@@ -73,6 +75,7 @@ namespace WACe001
 			services.AddScoped<ITravelContext, TravelContext>();
 			services.AddScoped<ITravelRepository, TravelRepository>();
 			services.AddScoped<ITrip, Trip>();
+			services.AddScoped<ITripViewModel, TripViewModel>();
 			services.AddSingleton(ConfigurationRoot);
 			services.AddTransient<ITravelContextSeed, TravelContextSeed>();
 		}
