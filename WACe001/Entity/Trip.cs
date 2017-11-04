@@ -41,9 +41,24 @@ namespace WACe001.Entity
 		{
 		}
 
-		public Trip(string name, DateTime createTimestamp, string userName, ICollection<Stop> stops)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="name">
+		/// Name of the trip.
+		/// </param>
+		/// <remarks>
+		/// Simple constructor (mainly for testing).
+		/// </remarks>
+		public Trip(string name)
 		{
 			Name = name;
+		}
+
+		public Trip(string name, DateTime createTimestamp, string userName, ICollection<Stop> stops)
+			:
+			this(name)
+		{
 			CreateTimestamp = createTimestamp;
 			UserName = userName;
 			Stops = stops;
