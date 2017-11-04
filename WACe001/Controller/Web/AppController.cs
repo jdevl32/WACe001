@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System;
+using WACe001.Controller.Web.Interface;
 using WACe001.Repository.Interface;
 using WACe001.Service.Interface;
 using WACe001.ViewModel;
@@ -10,11 +13,15 @@ namespace WACe001.Controller.Web
 	public class AppController
 		:
 		Microsoft.AspNetCore.Mvc.Controller
+		,
+		IAppController
 	{
 
 #region Property
 
 		private IConfigurationRoot ConfigurationRoot { get; }
+
+		private ILogger<IAppController> Logger { get; }
 
 		private IMailService MailService { get; }
 
@@ -24,9 +31,29 @@ namespace WACe001.Controller.Web
 
 #region Instance Initialization
 
-		public AppController(IConfigurationRoot configurationRoot, IMailService mailService, ITravelRepository travelRepository)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="configurationRoot">
+		/// 
+		/// </param>
+		/// <param name="logger">
+		/// 
+		/// </param>
+		/// <param name="mailService">
+		/// 
+		/// </param>
+		/// <param name="travelRepository">
+		/// 
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// Add logger.
+		/// </remarks>
+		public AppController(IConfigurationRoot configurationRoot, ILogger<IAppController> logger, IMailService mailService, ITravelRepository travelRepository)
 		{
 			ConfigurationRoot = configurationRoot;
+			Logger = logger;
 			MailService = mailService;
 			TravelRepository = travelRepository;
 		}
@@ -65,6 +92,7 @@ namespace WACe001.Controller.Web
 			return View();
 		}
 
+		/// <inheritdoc />
 		/// <summary>
 		/// 
 		/// </summary>
@@ -73,9 +101,21 @@ namespace WACe001.Controller.Web
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
-		/// Replace context with repository pattern.
+		/// Implement error logging.
 		/// </remarks>
-		public IActionResult Index() => View(TravelRepository.GetTrips());
+		public IActionResult Index()
+		{
+			try
+			{
+				return View(TravelRepository.GetTrips());
+			} // try
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, $"Error retrieving trips:  {ex}");
+			} // catch
+
+			return Redirect("/error");
+		}
 
 	}
 

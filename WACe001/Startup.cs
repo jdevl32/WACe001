@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using WACe001.Controller.Web;
+using WACe001.Controller.Web.Interface;
 using WACe001.Entity;
 using WACe001.Entity.Interface;
 using WACe001.Repository;
@@ -42,18 +45,18 @@ namespace WACe001
 		/// 
 		/// </param>
 		/// <remarks>
-		/// <![CDATA[
-		// This method gets called by the runtime. Use this method to add services to the container.
-		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-		/// ]]>
+		/// This method gets called by the runtime. Use this method to add services to the container.
+		/// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		/// Last modification:
-		/// Add scoped dependency injection for travel context.
-		/// Expand dependency injection for travel context seed (to include interface).
+		/// Add logging.
+		/// Add scoped dependency injection for app controller interface and implementation.
 		/// </remarks>
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContext<TravelContext>();
+			services.AddLogging();
 			services.AddMvc();
+			services.AddScoped<IAppController, AppController>();
 
 			// todo: check other environment(s)
 			if (HostingEnvironment.IsDevelopment())
@@ -74,32 +77,38 @@ namespace WACe001
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="app">
+		/// <param name="applicationBuilder">
 		/// 
 		/// </param>
-		/// <param name="env">
+		/// <param name="hostingEnvironment">
 		/// 
 		/// </param>
-		/// <param name="contextSeed">
+		/// <param name="loggerFactory">
+		/// 
+		/// </param>
+		/// <param name="travelContextSeed">
 		/// 
 		/// </param>
 		/// <remarks>
-		/// <![CDATA[
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		/// ]]>
+		/// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		/// Last modification:
 		/// Replace seed implementation with interface.
+		/// Refactoring of names.
 		/// </remarks>
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ITravelContextSeed contextSeed)
+		public void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, ITravelContextSeed travelContextSeed)
 		{
-			if (env.IsDevelopment())
+			var logLevel = LogLevel.Error;
+
+			if (hostingEnvironment.IsDevelopment())
 			{
-				app.UseDeveloperExceptionPage();
+				logLevel = LogLevel.Information;
+				applicationBuilder.UseDeveloperExceptionPage();
 			}
 
-			app.UseMvc(builder => builder.MapRoute(name: "Default", template: "{controller}/{action}/{id?}", defaults: new {controller = "App", action = "Index"}));
-			app.UseStaticFiles();
-			contextSeed.EnsureSeed().Wait();
+			applicationBuilder.UseMvc(routeBuilder => routeBuilder.MapRoute(name: "Default", template: "{controller}/{action}/{id?}", defaults: new {controller = "App", action = "Index"}));
+			applicationBuilder.UseStaticFiles();
+			travelContextSeed.EnsureSeed().Wait();
+			loggerFactory.AddDebug(logLevel);
 		}
 
 	}
