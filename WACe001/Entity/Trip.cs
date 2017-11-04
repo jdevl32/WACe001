@@ -5,7 +5,7 @@ using WACe001.Entity.Interface;
 namespace WACe001.Entity
 {
 
-    public class Trip
+	public class Trip
 		:
 		ITrip
     {
@@ -41,13 +41,19 @@ namespace WACe001.Entity
 		{
 		}
 
-		public Trip(int id, string name, DateTime createTimestamp, string userName, ICollection<Stop> stops)
+		public Trip(string name, DateTime createTimestamp, string userName, ICollection<Stop> stops)
 		{
-			Id = id;
 			Name = name;
 			CreateTimestamp = createTimestamp;
 			UserName = userName;
 			Stops = stops;
+		}
+
+		public Trip(int id, string name, DateTime createTimestamp, string userName, ICollection<Stop> stops)
+			:
+			this(name, createTimestamp, userName, stops)
+		{
+			Id = id;
 		}
 
 #endregion

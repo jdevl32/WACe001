@@ -50,10 +50,11 @@ namespace WACe001
 			} // else
 
 			services.AddSingleton(ConfigurationRoot);
+			services.AddTransient<TravelContextSeed>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, TravelContextSeed contextSeed)
 		{
 			if (env.IsDevelopment())
 			{
@@ -62,6 +63,7 @@ namespace WACe001
 
 			app.UseMvc(builder => builder.MapRoute(name: "Default", template: "{controller}/{action}/{id?}", defaults: new {controller = "App", action = "Index"}));
 			app.UseStaticFiles();
+			contextSeed.EnsureSeed().Wait();
 		}
 
 	}

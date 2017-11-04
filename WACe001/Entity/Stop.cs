@@ -4,7 +4,7 @@ using WACe001.Entity.Interface;
 namespace WACe001.Entity
 {
 
-    public class Stop
+	public class Stop
 		:
 		IStop
     {
@@ -40,13 +40,19 @@ namespace WACe001.Entity
 		{
 		}
 
-		public Stop(int id, string name, int order, Coordinate coordinate, DateTime arrival)
+		public Stop(string name, int order, Coordinate coordinate, DateTime arrival)
 		{
-			Id = id;
 			Name = name;
 			Order = order;
 			Coordinate = coordinate;
 			Arrival = arrival;
+		}
+
+		public Stop(int id, string name, int order, Coordinate coordinate, DateTime arrival)
+			:
+			this(name, order, coordinate, arrival)
+		{
+			Id = id;
 		}
 
 #endregion
