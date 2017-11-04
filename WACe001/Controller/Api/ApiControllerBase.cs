@@ -27,7 +27,8 @@ namespace WACe001.Controller.Api
 
 		public abstract string Get(int id);
 
-		public abstract void Post([FromBody]string value);
+		// todo|jdevl32: probably not needed...
+		//public abstract void Post([FromBody]string value);
 
 		public abstract void Put(int id, [FromBody]string value);
 

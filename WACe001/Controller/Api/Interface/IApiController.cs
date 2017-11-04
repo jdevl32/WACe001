@@ -10,7 +10,8 @@ namespace WACe001.Controller.Api.Interface
 
 		string Get(int id);
 
-		void Post([FromBody]string value);
+		// todo|jdevl32: probably not needed...
+		//void Post([FromBody]string value);
 
 		void Put(int id, [FromBody]string value);
 

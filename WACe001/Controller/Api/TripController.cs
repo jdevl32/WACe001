@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WACe001.Entity;
+using WACe001.Entity.Interface;
 using WACe001.Repository.Interface;
 
 namespace WACe001.Controller.Api
@@ -44,11 +44,24 @@ namespace WACe001.Controller.Api
             return "value";
         }
         
-        // POST: api/Trip
+		/// <summary>
+		/// Create a new trip.
+		/// POST: api/Trip
+		/// </summary>
+		/// <param name="trip">
+		/// 
+		/// </param>
+		/// <returns>
+		/// 
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
         [HttpPost]
-        public override void Post([FromBody]string value)
-        {
-        }
+        public IActionResult Post([FromBody]Trip trip)
+		{
+			return Ok(true);
+		}
         
         // PUT: api/Trip/5
         [HttpPut("{id}")]

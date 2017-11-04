@@ -50,6 +50,7 @@ namespace WACe001
 		/// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		/// Last modification:
 		/// Set camel case contract resolver.
+		/// Add scoped dependency injection for stop and trip interfaces and implementations.
 		/// </remarks>
 		public void ConfigureServices(IServiceCollection services)
 		{
@@ -68,8 +69,10 @@ namespace WACe001
 				// todo|jdevl32: implement real mail service...
 			} // else
 
+			services.AddScoped<IStop, Stop>();
 			services.AddScoped<ITravelContext, TravelContext>();
 			services.AddScoped<ITravelRepository, TravelRepository>();
+			services.AddScoped<ITrip, Trip>();
 			services.AddSingleton(ConfigurationRoot);
 			services.AddTransient<ITravelContextSeed, TravelContextSeed>();
 		}
