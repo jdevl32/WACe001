@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using WACe001.Entity;
+using WACe001.Repository.Interface;
 using WACe001.Service.Interface;
 using WACe001.ViewModel;
 
@@ -19,17 +18,17 @@ namespace WACe001.Controller.Web
 
 		private IMailService MailService { get; }
 
-		private TravelContext TravelContext { get; }
+		private ITravelRepository TravelRepository { get; }
 
 #endregion
 
 #region Instance Initialization
 
-		public AppController(IConfigurationRoot configurationRoot, IMailService mailService, TravelContext travelContext)
+		public AppController(IConfigurationRoot configurationRoot, IMailService mailService, ITravelRepository travelRepository)
 		{
 			ConfigurationRoot = configurationRoot;
 			MailService = mailService;
-			TravelContext = travelContext;
+			TravelRepository = travelRepository;
 		}
 
 #endregion
@@ -46,6 +45,7 @@ namespace WACe001.Controller.Web
 			return View();
 		}
 
+		// todo: replace with interface ???
 		[HttpPost]
 		public IActionResult Contact(ContactViewModel model)
 		{
@@ -65,13 +65,17 @@ namespace WACe001.Controller.Web
 			return View();
 		}
 
-		// GET: /<controller>/
-		public IActionResult Index()
-		{
-			var trips = TravelContext.Trips.ToList();
-
-			return View(trips);
-		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>
+		/// 
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// Replace context with repository pattern.
+		/// </remarks>
+		public IActionResult Index() => View(TravelRepository.GetTrips());
 
 	}
 

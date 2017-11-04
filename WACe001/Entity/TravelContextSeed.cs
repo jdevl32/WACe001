@@ -2,21 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WACe001.Entity.Interface;
 
 namespace WACe001.Entity
 {
 
 	public class TravelContextSeed
+		:
+		ITravelContextSeed
 	{
 
 #region Property
 
+		// todo: ??? replace with inteface ???
 		private TravelContext TravelContext { get; }
 
 #endregion
 
 #region Instance Initialization
 
+		// todo: ??? replace with inteface ???
 		public TravelContextSeed(TravelContext travelContext) => TravelContext = travelContext;
 
 #endregion
@@ -41,13 +46,14 @@ namespace WACe001.Entity
 							// todo: fill username...
 							""
 							,
+							// todo: ??? replace with inteface ???
 							new List<Stop>
 							{
-								new Stop($"Seed [{stopNames[stop++]}] Stop", 1 + stop, new Coordinate(5 + 10 * stop, 5 + 10 * stop), now.AddYears(stop - 10))
+								new Stop($"Seed [{stopNames[stop++]}] Stop", stop, new Coordinate(5 + 10 * stop, 5 + 10 * stop), now.AddYears(stop - 10))
 								,
-								new Stop($"Seed [{stopNames[stop++]}] Stop", 1 + stop, new Coordinate(5 + 10 * stop, 5 + 10 * stop), now.AddYears(stop - 10))
+								new Stop($"Seed [{stopNames[stop++]}] Stop", stop, new Coordinate(5 + 10 * stop, 5 + 10 * stop), now.AddYears(stop - 10))
 								,
-								new Stop($"Seed [{stopNames[stop++]}] Stop", 1 + stop, new Coordinate(5 + 10 * stop, 5 + 10 * stop), now.AddYears(stop - 10))
+								new Stop($"Seed [{stopNames[stop++]}] Stop", stop, new Coordinate(5 + 10 * stop, 5 + 10 * stop), now.AddYears(stop - 10))
 							}
 						);
 
