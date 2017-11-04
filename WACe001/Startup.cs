@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 using WACe001.Controller.Web;
 using WACe001.Controller.Web.Interface;
 using WACe001.Entity;
@@ -48,14 +49,13 @@ namespace WACe001
 		/// This method gets called by the runtime. Use this method to add services to the container.
 		/// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		/// Last modification:
-		/// Add logging.
-		/// Add scoped dependency injection for app controller interface and implementation.
+		/// Set camel case contract resolver.
 		/// </remarks>
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContext<TravelContext>();
 			services.AddLogging();
-			services.AddMvc();
+			services.AddMvc().AddJsonOptions(mvcBuilder => mvcBuilder.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
 			services.AddScoped<IAppController, AppController>();
 
 			// todo|jdevl32: check other environment(s)

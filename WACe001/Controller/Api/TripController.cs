@@ -23,14 +23,21 @@ namespace WACe001.Controller.Api
 
 #endregion
 
-		// GET: api/Trip
+		/// <summary>
+		/// Get the entire set of trips.
+		/// GET: api/Trip
+		/// </summary>
+		/// <returns>
+		/// 
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// Implement travel repository as data provider.
+		/// </remarks>
 		[HttpGet]
-        public override IActionResult Get()
-        {
-	        return Ok(new Trip("Day Tripper"));
-        }
+        public override IActionResult Get() => Ok(TravelRepository.GetTrips());
 
-        // GET: api/Trip/5
+	    // GET: api/Trip/5
         [HttpGet("{id}", Name = "GetTrip")]
         public override string Get(int id)
         {
