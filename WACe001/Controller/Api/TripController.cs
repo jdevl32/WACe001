@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using WACe001.Controller.Api.Interface;
 using WACe001.Entity;
 using WACe001.Repository.Interface;
 using WACe001.ViewModel;
@@ -20,9 +22,9 @@ namespace WACe001.Controller.Api
 #region Instance Initialization
 
 		/// <inheritdoc />
-		public TripController(IHostingEnvironment hostingEnvironment, ITravelRepository travelRepository)
+		public TripController(IHostingEnvironment hostingEnvironment, ILogger<IApiController> logger, ITravelRepository travelRepository)
 			:
-			base(hostingEnvironment, travelRepository)
+			base(hostingEnvironment, logger, travelRepository)
 		{
 		}
 
@@ -48,7 +50,7 @@ namespace WACe001.Controller.Api
 			}
 			catch (Exception ex)
 			{
-				// todo|jdevl32: implement logging...
+				Logger.LogError(ex, $"Error retrieving trips:  {ex}");
 			}
 
 		    return BadRequest();

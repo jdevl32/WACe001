@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using WACe001.Controller.Api.Interface;
 using WACe001.Repository.Interface;
 
@@ -14,8 +15,28 @@ namespace WACe001.Controller.Api
 
 #region Property
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <remarks>
+		/// 
+		/// </remarks>
 		protected IHostingEnvironment HostingEnvironment { get; }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <remarks>
+		/// 
+		/// </remarks>
+		protected ILogger<IApiController> Logger { get; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <remarks>
+		/// 
+		/// </remarks>
 		protected ITravelRepository TravelRepository { get; }
 
 #endregion
@@ -28,16 +49,20 @@ namespace WACe001.Controller.Api
 		/// <param name="hostingEnvironment">
 		/// 
 		/// </param>
+		/// <param name="logger">
+		/// 
+		/// </param>
 		/// <param name="travelRepository">
 		/// 
 		/// </param>
 		/// <remarks>
 		/// Last modification:
-		/// Add hosting environment.
+		/// Add logger.
 		/// </remarks>
-		protected ApiControllerBase(IHostingEnvironment hostingEnvironment, ITravelRepository travelRepository)
+		protected ApiControllerBase(IHostingEnvironment hostingEnvironment, ILogger<IApiController> logger, ITravelRepository travelRepository)
 		{
 			HostingEnvironment = hostingEnvironment;
+			Logger = logger;
 			TravelRepository = travelRepository;
 		}
 
