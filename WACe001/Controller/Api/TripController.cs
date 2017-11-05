@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using WACe001.Controller.Api.Interface;
 using WACe001.Entity;
 using WACe001.Repository.Interface;
@@ -75,23 +76,27 @@ namespace WACe001.Controller.Api
 	    /// </returns>
 	    /// <remarks>
 	    /// Last modification:
-	    /// Verify model state.
-	    /// Change trip parameter type from entity to view model.
+	    /// Modify signature to return async task.
 	    /// </remarks>
 	    [HttpPost]
-        public IActionResult Post([FromBody] TripViewModel tripViewModel)
+        public async Task<IActionResult> Post([FromBody] TripViewModel tripViewModel)
 		{
 			if (ModelState.IsValid)
 			{
-				// todo|jdevl32: save to db...
 				var trip = Mapper.Map<Trip>(tripViewModel);
 
-				// todo|jdevl32: contant(s)...
-				// Use map in case database modified the trip in any way.
-				return Created($"/api/trip/{tripViewModel.Name}", Mapper.Map<TripViewModel>(trip));
-			} // if
+				TravelRepository.AddTrip(trip);
 
-			if (HostingEnvironment.IsDevelopment())
+				if (await TravelRepository.SaveChangesAsync())
+				{
+					// todo|jdevl32: contant(s)...
+					// Use map in case database modified the trip in any way.
+					var value = Mapper.Map<TripViewModel>(trip);
+
+					return Created($"/api/trip/{value.Name}", value);
+				} // if
+			} // if
+			else if (HostingEnvironment.IsDevelopment())
 			{
 				return BadRequest(ModelState);
 			} // if

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using WACe001.Entity;
 using WACe001.Entity.Interface;
 using WACe001.Repository.Interface;
 
@@ -16,7 +18,7 @@ namespace WACe001.Repository
 
 		private ILogger<ITravelRepository> Logger { get; }
 
-		private ITravelContext TravelContext { get; }
+		private TravelContext TravelContext { get; }
 
 #endregion
 
@@ -34,7 +36,7 @@ namespace WACe001.Repository
 		/// <remarks>
 		/// Add logger.
 		/// </remarks>
-		public TravelRepository(ILogger<ITravelRepository>logger, ITravelContext travelContext)
+		public TravelRepository(ILogger<ITravelRepository>logger, TravelContext travelContext)
 		{
 			Logger = logger;
 			TravelContext = travelContext;
@@ -42,12 +44,10 @@ namespace WACe001.Repository
 
 #endregion
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns>
-		/// 
-		/// </returns>
+		/// <inheritdoc />
+		public void AddTrip(Trip trip) => TravelContext.Trips.Add(trip);
+
+		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
 		/// Implement logging.
@@ -58,6 +58,9 @@ namespace WACe001.Repository
 
 			return TravelContext.Trips.ToList();
 		}
+
+		/// <inheritdoc />
+		public async Task<bool> SaveChangesAsync() => await TravelContext.SaveChangesAsync() > 0;
 
 	}
 
