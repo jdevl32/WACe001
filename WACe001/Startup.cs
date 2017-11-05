@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -58,7 +59,15 @@ namespace WACe001
 		{
 			services.AddDbContext<TravelContext>();
 			services.AddLogging();
-			services.AddMvc().AddJsonOptions(mvcBuilder => mvcBuilder.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
+
+			services.AddMvc().AddJsonOptions
+				(
+					mvcBuilder =>
+					{
+						mvcBuilder.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+					}
+				);
+
 			services.AddScoped<IAppController, AppController>();
 
 			// todo|jdevl32: check other environment(s)
@@ -98,11 +107,12 @@ namespace WACe001
 		/// <remarks>
 		/// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		/// Last modification:
-		/// Replace seed implementation with interface.
-		/// Refactoring of names.
+		/// Configure auto-mapper.
 		/// </remarks>
 		public void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, ITravelContextSeed travelContextSeed)
 		{
+			InitializeMapper();
+
 			var logLevel = LogLevel.Error;
 
 			if (hostingEnvironment.IsDevelopment())
@@ -111,10 +121,43 @@ namespace WACe001
 				applicationBuilder.UseDeveloperExceptionPage();
 			}
 
-			applicationBuilder.UseMvc(routeBuilder => routeBuilder.MapRoute(name: "Default", template: "{controller}/{action}/{id?}", defaults: new {controller = "App", action = "Index"}));
+			applicationBuilder.UseMvc
+				(
+					routeBuilder =>
+					{
+						routeBuilder.MapRoute
+						(
+							name: "Default"
+							,
+							template: "{controller}/{action}/{id?}"
+							,
+							defaults: new {controller = "App", action = "Index"}
+						);
+					}
+				);
+
 			applicationBuilder.UseStaticFiles();
 			travelContextSeed.EnsureSeed().Wait();
 			loggerFactory.AddDebug(logLevel);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// 
+		/// </remarks>
+		private static void InitializeMapper()
+		{
+			Mapper.Initialize
+			(
+				config =>
+				{
+					config.CreateMap<ITripViewModel, ITrip>().ReverseMap();
+					config.CreateMap<TripViewModel, Trip>().ReverseMap();
+				}
+			);
 		}
 
 	}

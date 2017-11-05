@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using WACe001.Entity;
 using WACe001.Repository.Interface;
 using WACe001.ViewModel;
 
 namespace WACe001.Controller.Api
 {
 
-    [Produces("application/json")]
+	[Produces("application/json")]
     [Route("api/Trip")]
     public class TripController
 		:
@@ -33,13 +37,25 @@ namespace WACe001.Controller.Api
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
-		/// Implement travel repository as data provider.
+		/// Use auto-mapper to map entity to view model.
 		/// </remarks>
 		[HttpGet]
-        public override IActionResult Get() => Ok(TravelRepository.GetTrips());
+        public override IActionResult Get()
+	    {
+			try
+			{
+				return Ok(Mapper.Map<IEnumerable<TripViewModel>>(TravelRepository.GetTrips()));
+			}
+			catch (Exception ex)
+			{
+				// todo|jdevl32: implement logging...
+			}
 
-	    // GET: api/Trip/5
-        [HttpGet("{id}", Name = "GetTrip")]
+		    return BadRequest();
+	    }
+
+		// GET: api/Trip/5
+		[HttpGet("{id}", Name = "GetTrip")]
         public override string Get(int id)
         {
             return "value";
@@ -65,8 +81,12 @@ namespace WACe001.Controller.Api
 		{
 			if (ModelState.IsValid)
 			{
+				// todo|jdevl32: save to db...
+				var trip = Mapper.Map<Trip>(tripViewModel);
+
 				// todo|jdevl32: contant(s)...
-				return Created($"/api/trip/{tripViewModel.Name}", tripViewModel);
+				// Use map in case database modified the trip in any way.
+				return Created($"/api/trip/{tripViewModel.Name}", Mapper.Map<TripViewModel>(trip));
 			} // if
 
 			if (HostingEnvironment.IsDevelopment())

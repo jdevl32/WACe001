@@ -11,7 +11,7 @@ namespace WACe001.Entity.Migration
 	/// <remarks>
 	/// Fully-qualified (Migration) base class required (to avoid collision with project namespace).
 	/// </remarks>
-    public partial class Initial : Microsoft.EntityFrameworkCore.Migrations.Migration
+	public partial class Initial : Microsoft.EntityFrameworkCore.Migrations.Migration
 	{
 
         protected override void Up(MigrationBuilder migrationBuilder)

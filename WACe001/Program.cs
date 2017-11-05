@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace WACe001
 {
+
 	public class Program
 	{
+
 		public static void Main(string[] args)
 		{
 			BuildWebHost(args).Run();
@@ -14,5 +16,7 @@ namespace WACe001
 			WebHost.CreateDefaultBuilder(args)
 				.UseStartup<Startup>()
 				.Build();
+
 	}
+
 }

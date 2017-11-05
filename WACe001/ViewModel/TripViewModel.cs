@@ -12,11 +12,27 @@ namespace WACe001.ViewModel
 
 #region Property
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <remarks>
+		/// Setter is required.
+		/// Last modified:
+		/// Implement setter.
+		/// </remarks>
 		[Required]
 		[StringLength(100, MinimumLength = 1)]
-		public string Name { get; }
+		public string Name { get; set; }
 
-		public DateTime CreateTimestamp { get; }
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <remarks>
+		/// Setter is required.
+		/// Last modified:
+		/// Implement setter.
+		/// </remarks>
+		public DateTime CreateTimestamp { get; set; }
 
 #endregion
 
