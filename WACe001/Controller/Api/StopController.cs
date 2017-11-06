@@ -1,32 +1,99 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using WACe001.Repository.Interface;
+using WACe001.ViewModel;
 
 namespace WACe001.Controller.Api
 {
 
+	/// <inheritdoc />
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <remarks>
+	/// Last modification:
+	/// 
+	/// </remarks>
 	[Produces("application/json")]
-    [Route("api/Stop")]
-    public class StopController : Microsoft.AspNetCore.Mvc.Controller
+    [Route("api/trip/{tripName}/stop")]
+    public class StopController
+		:
+		ApiControllerBase<StopController>
     {
 
-        // GET: api/Stop
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new[] { "value1", "value2" };
-        }
+#region Instance Initialization
 
-        // GET: api/Stop/5
-        [HttpGet("{id}", Name = "GetStop")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-        
-        // POST: api/Stop
-        [HttpPost]
+	    /// <inheritdoc />
+	    public StopController(IHostingEnvironment hostingEnvironment, ILogger<StopController> logger, ITravelRepository travelRepository)
+			:
+			base(hostingEnvironment, logger, travelRepository)
+		{
+		}
+
+#endregion
+
+		// todo|jdevl32: implement ???
+#if true
+#else
+		// GET: api/Stop
+		[HttpGet]
+		public override IActionResult Get()
+		{
+			return NoContent();
+		}
+
+		// GET: api/Stop/5
+		[HttpGet("{id}", Name = "GetStop")]
+		public override string Get(int id)
+		{
+			return null;
+		}
+#endif
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="tripName">
+		/// 
+		/// </param>
+		/// <returns>
+		/// 
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// Specify order clause.
+		/// </remarks>
+		[HttpGet(Name = "GetStopsByTripName")]
+	    public IActionResult Get(string tripName)
+	    {
+			try
+			{
+				return Ok
+					(
+						Mapper.Map<IEnumerable<StopViewModel>>
+						(
+							TravelRepository.GetTrip(tripName).Stops.OrderBy(stop => stop.Order).ToList()
+						)
+					);
+			} // try
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, $"Error retrieving stops:  {ex}");
+			} // catch
+
+		    return BadRequest();
+	    }
+
+		// POST: api/Stop
+		[HttpPost]
         public void Post([FromBody]string value)
         {
+			// todo|jdevl32: implement...
         }
         
         // PUT: api/Stop/5

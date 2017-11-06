@@ -44,10 +44,7 @@ namespace WACe001.ViewModel
 		/// <remarks>
 		/// 
 		/// </remarks>
-		public TripViewModel()
-		{
-			CreateTimestamp = DateTime.UtcNow;
-		}
+		public TripViewModel() => CreateTimestamp = DateTime.UtcNow;
 
 		/// <inheritdoc />
 		/// <summary>
@@ -59,12 +56,7 @@ namespace WACe001.ViewModel
 		/// <remarks>
 		/// 
 		/// </remarks>
-		public TripViewModel(string name)
-			:
-			this()
-		{
-			Name = name;
-		}
+		public TripViewModel(string name):this() => Name = name;
 
 		/// <inheritdoc />
 		/// <summary>
@@ -81,10 +73,7 @@ namespace WACe001.ViewModel
 		/// </remarks>
 		public TripViewModel(string name, DateTime createTimestamp)
 			:
-			this(name)
-		{
-			CreateTimestamp = createTimestamp;
-		}
+			this(name) => CreateTimestamp = createTimestamp;
 
 #endregion
 

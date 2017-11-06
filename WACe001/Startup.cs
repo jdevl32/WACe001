@@ -81,6 +81,7 @@ namespace WACe001
 			} // else
 
 			services.AddScoped<IStop, Stop>();
+			services.AddScoped<IStopViewModel, StopViewModel>();
 			services.AddScoped<ITravelContext, TravelContext>();
 			services.AddScoped<ITravelRepository, TravelRepository>();
 			services.AddScoped<ITrip, Trip>();
@@ -127,11 +128,11 @@ namespace WACe001
 					{
 						routeBuilder.MapRoute
 						(
-							name: "Default"
+							"Default"
 							,
-							template: "{controller}/{action}/{id?}"
+							"{controller}/{action}/{id?}"
 							,
-							defaults: new {controller = "App", action = "Index"}
+							new {controller = "App", action = "Index"}
 						);
 					}
 				);
@@ -146,7 +147,7 @@ namespace WACe001
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
-		/// 
+		/// Configure mappings for stops.
 		/// </remarks>
 		private static void InitializeMapper()
 		{
@@ -154,7 +155,14 @@ namespace WACe001
 			(
 				config =>
 				{
+					// todo|jdevl32: cleanup !!!
+					config.CreateMap<IStopViewModel, IStop>().ReverseMap();
+					//config.CreateMap<IStopViewModel, Stop>().ReverseMap();
 					config.CreateMap<ITripViewModel, ITrip>().ReverseMap();
+					//config.CreateMap<ITripViewModel, Trip>().ReverseMap();
+					//config.CreateMap<StopViewModel, IStop>().ReverseMap();
+					config.CreateMap<StopViewModel, Stop>().ReverseMap();
+					//config.CreateMap<TripViewModel, ITrip>().ReverseMap();
 					config.CreateMap<TripViewModel, Trip>().ReverseMap();
 				}
 			);

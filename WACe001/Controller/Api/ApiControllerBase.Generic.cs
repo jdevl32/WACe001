@@ -1,42 +1,39 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using WACe001.Controller.Api.Interface;
 using WACe001.Repository.Interface;
 
 namespace WACe001.Controller.Api
 {
 
-	// todo|jdevl32: cleanup !!!
-#if true
-	/// <inheritdoc />
 	/// <summary>
 	/// 
 	/// </summary>
+	/// <typeparam name="TDerivedClass">
+	/// This should be the type of the derived class from this base class (for the logger).
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Re-implement as derived from generic base class.
+	/// Change access for hosting environment and travel repository interface implementations.
 	/// </remarks>
-	public abstract class ApiControllerBase
+	public abstract class ApiControllerBase<TDerivedClass>
 		:
-		ApiControllerBase<ApiControllerBase>
+		Microsoft.AspNetCore.Mvc.Controller
+		,
+		IApiController
+		where TDerivedClass : class
 	{
+
+#region Property
 
 		/// <inheritdoc />
-		protected ApiControllerBase(IHostingEnvironment hostingEnvironment, ILogger<ApiControllerBase> logger, ITravelRepository travelRepository)
-			:
-			base(hostingEnvironment, logger, travelRepository)
-		{
-		}
-
-	}
-#else
-	public abstract class ApiControllerBase
-:
-Microsoft.AspNetCore.Mvc.Controller
-,
-IApiController
-	{
-
-	#region Property
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <remarks>
+		/// 
+		/// </remarks>
+		public IHostingEnvironment HostingEnvironment { get; protected set; }
 
 		/// <summary>
 		/// 
@@ -44,27 +41,20 @@ IApiController
 		/// <remarks>
 		/// 
 		/// </remarks>
-		protected IHostingEnvironment HostingEnvironment { get; }
+		protected ILogger<TDerivedClass> Logger { get; }
 
+		/// <inheritdoc />
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <remarks>
 		/// 
 		/// </remarks>
-		protected ILogger<IApiController> Logger { get; }
+		public ITravelRepository TravelRepository { get; protected set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <remarks>
-		/// 
-		/// </remarks>
-		protected ITravelRepository TravelRepository { get; }
+#endregion
 
-	#endregion
-
-	#region Instance Initialization
+#region Instance Initialization
 
 		/// <summary>
 		/// 
@@ -82,15 +72,18 @@ IApiController
 		/// Last modification:
 		/// Add logger.
 		/// </remarks>
-		protected ApiControllerBase(IHostingEnvironment hostingEnvironment, ILogger<IApiController> logger, ITravelRepository travelRepository)
+		protected ApiControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, ITravelRepository travelRepository)
 		{
 			HostingEnvironment = hostingEnvironment;
 			Logger = logger;
 			TravelRepository = travelRepository;
 		}
 
-	#endregion
+#endregion
 
+		// todo|jdevl32: not needed ???
+#if true
+#else
 		public abstract IActionResult Get();
 
 		public abstract string Get(int id);
@@ -100,8 +93,7 @@ IApiController
 		public abstract void Put(int id, [FromBody]string value);
 
 		public abstract void Delete(int id);
-
-	}
 #endif
 
+	}
 }

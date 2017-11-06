@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,6 +47,18 @@ namespace WACe001.Repository
 
 		/// <inheritdoc />
 		public void AddTrip(Trip trip) => TravelContext.Trips.Add(trip);
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public ITrip GetTrip(string name)
+		{
+			Logger.LogInformation($"Get trip [{name}] from travel context...");
+
+			// todo|jdevl32: replace with procedure implemented by context ???
+			return TravelContext.Trips.Include(trip => trip.Stops).FirstOrDefault(trip => trip.Name.Equals(name));
+		}
 
 		/// <inheritdoc />
 		/// <remarks>

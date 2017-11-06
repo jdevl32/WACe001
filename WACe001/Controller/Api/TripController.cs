@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WACe001.Controller.Api.Interface;
 using WACe001.Entity;
 using WACe001.Repository.Interface;
 using WACe001.ViewModel;
@@ -13,17 +12,25 @@ using WACe001.ViewModel;
 namespace WACe001.Controller.Api
 {
 
+	/// <inheritdoc />
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <remarks>
+	/// Last modification:
+	/// Re-implement with generic base class.
+	/// </remarks>
 	[Produces("application/json")]
-    [Route("api/Trip")]
+    [Route("api/trip")]
     public class TripController
 		:
-		ApiControllerBase
+		ApiControllerBase<TripController>
     {
 
 #region Instance Initialization
 
 		/// <inheritdoc />
-		public TripController(IHostingEnvironment hostingEnvironment, ILogger<IApiController> logger, ITravelRepository travelRepository)
+		public TripController(IHostingEnvironment hostingEnvironment, ILogger<TripController> logger, ITravelRepository travelRepository)
 			:
 			base(hostingEnvironment, logger, travelRepository)
 		{
@@ -40,10 +47,10 @@ namespace WACe001.Controller.Api
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
-		/// Use auto-mapper to map entity to view model.
+		/// Remove obsolete override.
 		/// </remarks>
 		[HttpGet]
-        public override IActionResult Get()
+        public IActionResult Get()
 	    {
 			try
 			{
@@ -59,7 +66,7 @@ namespace WACe001.Controller.Api
 
 		// GET: api/Trip/5
 		[HttpGet("{id}", Name = "GetTrip")]
-        public override string Get(int id)
+        public string Get(int id)
         {
             return "value";
         }
@@ -106,13 +113,13 @@ namespace WACe001.Controller.Api
         
         // PUT: api/Trip/5
         [HttpPut("{id}")]
-        public override void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]string value)
         {
         }
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public override void Delete(int id)
+        public void Delete(int id)
         {
         }
 

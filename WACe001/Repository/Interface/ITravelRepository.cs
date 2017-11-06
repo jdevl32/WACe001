@@ -23,6 +23,18 @@ namespace WACe001.Repository.Interface
 		/// <summary>
 		/// 
 		/// </summary>
+		/// <param name="name"></param>
+		/// <returns>
+		/// 
+		/// </returns>
+		/// <remarks>
+		/// 
+		/// </remarks>
+		ITrip GetTrip(string name);
+
+		/// <summary>
+		/// 
+		/// </summary>
 		/// <returns>
 		/// 
 		/// </returns>

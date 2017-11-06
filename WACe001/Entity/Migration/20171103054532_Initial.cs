@@ -17,11 +17,11 @@ namespace WACe001.Entity.Migration
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Coordinate",
-                columns: table => new
+                "Coordinate",
+                table => new
                 {
-                    Latitude = table.Column<double>(type: "float", nullable: false),
-                    Longitude = table.Column<double>(type: "float", nullable: false)
+                    Latitude = table.Column<double>("float", nullable: false),
+                    Longitude = table.Column<double>("float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,14 +29,14 @@ namespace WACe001.Entity.Migration
                 });
 
             migrationBuilder.CreateTable(
-                name: "Trips",
-                columns: table => new
+                "Trips",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreateTimestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CreateTimestamp = table.Column<DateTime>("datetime2", nullable: false),
+                    Name = table.Column<string>("nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>("nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,56 +44,56 @@ namespace WACe001.Entity.Migration
                 });
 
             migrationBuilder.CreateTable(
-                name: "Stops",
-                columns: table => new
+                "Stops",
+                table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Arrival = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CoordinateLatitude = table.Column<double>(type: "float", nullable: true),
-                    CoordinateLongitude = table.Column<double>(type: "float", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Order = table.Column<int>(type: "int", nullable: false),
-                    TripId = table.Column<int>(type: "int", nullable: true)
+                    Arrival = table.Column<DateTime>("datetime2", nullable: false),
+                    CoordinateLatitude = table.Column<double>("float", nullable: true),
+                    CoordinateLongitude = table.Column<double>("float", nullable: true),
+                    Name = table.Column<string>("nvarchar(max)", nullable: true),
+                    Order = table.Column<int>("int", nullable: false),
+                    TripId = table.Column<int>("int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Stops", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Stops_Trips_TripId",
-                        column: x => x.TripId,
-                        principalTable: "Trips",
-                        principalColumn: "Id",
+                        "FK_Stops_Trips_TripId",
+                        x => x.TripId,
+                        "Trips",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Stops_Coordinate_CoordinateLatitude_CoordinateLongitude",
-                        columns: x => new { x.CoordinateLatitude, x.CoordinateLongitude },
-                        principalTable: "Coordinate",
-                        principalColumns: new[] { "Latitude", "Longitude" },
+                        "FK_Stops_Coordinate_CoordinateLatitude_CoordinateLongitude",
+                        x => new { x.CoordinateLatitude, x.CoordinateLongitude },
+                        "Coordinate",
+                        new[] { "Latitude", "Longitude" },
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stops_TripId",
-                table: "Stops",
-                column: "TripId");
+                "IX_Stops_TripId",
+                "Stops",
+                "TripId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stops_CoordinateLatitude_CoordinateLongitude",
-                table: "Stops",
-                columns: new[] { "CoordinateLatitude", "CoordinateLongitude" });
+                "IX_Stops_CoordinateLatitude_CoordinateLongitude",
+                "Stops",
+                new[] { "CoordinateLatitude", "CoordinateLongitude" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Stops");
+                "Stops");
 
             migrationBuilder.DropTable(
-                name: "Trips");
+                "Trips");
 
             migrationBuilder.DropTable(
-                name: "Coordinate");
+                "Coordinate");
         }
 
     }
