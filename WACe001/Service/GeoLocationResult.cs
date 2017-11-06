@@ -1,7 +1,7 @@
 ﻿using WACe001.Entity.Interface;
-using WACe001.Model.Interface;
+using WACe001.Service.Interface;
 
-namespace WACe001.Model
+namespace WACe001.Service
 {
 
 	public class GeoLocationResult

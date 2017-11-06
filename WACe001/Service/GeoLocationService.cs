@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using WACe001.Model;
 using WACe001.Model.Interface;
+using WACe001.Service.Interface;
 
 namespace WACe001.Service
 {

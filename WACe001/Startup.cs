@@ -5,8 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
-using WACe001.Controller.Web;
-using WACe001.Controller.Web.Interface;
 using WACe001.Entity;
 using WACe001.Entity.Interface;
 using WACe001.Repository;
@@ -52,7 +50,7 @@ namespace WACe001
 		/// This method gets called by the runtime. Use this method to add services to the container.
 		/// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		/// Last modification:
-		/// Add scoped dependency injection for coordinate interface and implementation.
+		/// Remove non-true services.
 		/// </remarks>
 		public void ConfigureServices(IServiceCollection services)
 		{
@@ -67,8 +65,9 @@ namespace WACe001
 					}
 				);
 
-			services.AddScoped<IAppController, AppController>();
-			services.AddScoped<ICoordinate, Coordinate>();
+			// todo|jdevl32: cleanup...
+			//services.AddScoped<IAppController, AppController>();
+			//services.AddScoped<ICoordinate, Coordinate>();
 
 			// todo|jdevl32: check other environment(s)
 			if (HostingEnvironment.IsDevelopment())
@@ -80,12 +79,12 @@ namespace WACe001
 				// todo|jdevl32: implement real mail service...
 			} // else
 
-			services.AddScoped<IStop, Stop>();
-			services.AddScoped<IStopViewModel, StopViewModel>();
-			services.AddScoped<ITravelContext, TravelContext>();
+			//services.AddScoped<IStop, Stop>();
+			//services.AddScoped<IStopViewModel, StopViewModel>();
+			//services.AddScoped<ITravelContext, TravelContext>();
 			services.AddScoped<ITravelRepository, TravelRepository>();
-			services.AddScoped<ITrip, Trip>();
-			services.AddScoped<ITripViewModel, TripViewModel>();
+			//services.AddScoped<ITrip, Trip>();
+			//services.AddScoped<ITripViewModel, TripViewModel>();
 			services.AddSingleton(ConfigurationRoot);
 			services.AddTransient<ITravelContextSeed, TravelContextSeed>();
 		}
@@ -155,7 +154,7 @@ namespace WACe001
 			(
 				config =>
 				{
-					// todo|jdevl32: cleanup !!!
+					// todo|jdevl32: cleanup...
 					config.CreateMap<IStopViewModel, IStop>().ReverseMap();
 					//config.CreateMap<IStopViewModel, Stop>().ReverseMap();
 					config.CreateMap<ITripViewModel, ITrip>().ReverseMap();

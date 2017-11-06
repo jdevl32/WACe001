@@ -1,12 +1,8 @@
-﻿using WACe001.Entity.Interface;
-
-namespace WACe001.Model.Interface
+﻿namespace WACe001.Service.Interface
 {
 
-	public interface IGeoLocationResult
+	public interface IServiceResult
 	{
-
-#region Property
 
 		/// <summary>
 		/// Success status of the result.
@@ -23,16 +19,6 @@ namespace WACe001.Model.Interface
 		/// Last modification:
 		/// </remarks>
 		string Message { get; }
-
-		/// <summary>
-		/// The coordinates of the location.
-		/// </summary>
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		ICoordinate Coordinate { get; }
-
-#endregion
 
 	}
 
