@@ -148,7 +148,7 @@ namespace WACe001
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
-		/// Configure mappings for stops.
+		/// Configure mapping for coordinate.
 		/// </remarks>
 		private static void InitializeMapper()
 		{
@@ -157,6 +157,7 @@ namespace WACe001
 				config =>
 				{
 					// todo|jdevl32: cleanup...
+					config.CreateMap<ICoordinate, Coordinate>().ReverseMap();
 					config.CreateMap<IStopViewModel, IStop>().ReverseMap();
 					//config.CreateMap<IStopViewModel, Stop>().ReverseMap();
 					config.CreateMap<ITripViewModel, ITrip>().ReverseMap();

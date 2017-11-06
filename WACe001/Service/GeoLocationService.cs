@@ -35,7 +35,7 @@ namespace WACe001.Service
 		/// <inheritdoc />
 		public async Task<IGeoLocationResult> GetCoordinatesAsync(string locationName)
 		{
-			// todo|jdevl32: contant(s)...
+			// todo|jdevl32: constant(s)...
 			var result = new GeoLocationResult($"Location \"{locationName}\" could not be found.");
 			var apiKey = ConfigurationRoot["Key:API:Bing:Maps"];
 			var encodedName = WebUtility.UrlEncode(locationName);
@@ -49,12 +49,14 @@ namespace WACe001.Service
 			//
 
 			{
-				// todo|jdevl32: contant(s)...
+				// todo|jdevl32: try/catch !!!
+
+				// todo|jdevl32: constant(s)...
 				JToken jToken;
 
 				using (var httpClient = new HttpClient())
 				{
-					jToken = JObject.Parse(await httpClient.GetStringAsync(url))["resoureSets"][0]["resources"][0];
+					jToken = JObject.Parse(await httpClient.GetStringAsync(url))["resourceSets"][0]["resources"];
 				} // using
 			
 				if (jToken.HasValues)

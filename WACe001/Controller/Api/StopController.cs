@@ -6,14 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WACe001.Controller.Api.Interface;
 using WACe001.Entity;
 using WACe001.Repository.Interface;
+using WACe001.Service.Interface;
 using WACe001.ViewModel;
 
 namespace WACe001.Controller.Api
 {
 
-	/// <inheritdoc />
 	/// <summary>
 	/// 
 	/// </summary>
@@ -22,20 +23,31 @@ namespace WACe001.Controller.Api
 	/// 
 	/// </remarks>
 	[Produces("application/json")]
-    [Route("api/trip/{tripName}/stop")]
-    public class StopController
+	[Route("api/trip/{tripName}/stop")]
+	public class StopController
 		:
 		ApiControllerBase<StopController>
-    {
+		,
+		IStopController
+	{
+
+#region Property
+
+		/// <inheritdoc />
+		public IGeoLocationService GeoLocationService { get; }
+
+#endregion
 
 #region Instance Initialization
 
-	    /// <inheritdoc />
-	    public StopController(IHostingEnvironment hostingEnvironment, ILogger<StopController> logger, ITravelRepository travelRepository)
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// Add geo-location service.
+		/// </remarks>
+		public StopController(IGeoLocationService geoLocationService, IHostingEnvironment hostingEnvironment, ILogger<StopController> logger, ITravelRepository travelRepository)
 			:
-			base(hostingEnvironment, logger, travelRepository)
-		{
-		}
+			base(hostingEnvironment, logger, travelRepository) => GeoLocationService = geoLocationService;
 
 #endregion
 
@@ -57,22 +69,14 @@ namespace WACe001.Controller.Api
 		}
 #endif
 
-		/// <summary>
-		/// Get stops by trip name.
-		/// </summary>
-		/// <param name="tripName">
-		/// The name of the trip.
-		/// </param>
-		/// <returns>
-		/// 
-		/// </returns>
+		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
 		/// Specify order clause.
 		/// </remarks>
 		[HttpGet(Name = "GetStopsByTripName")]
-	    public IActionResult Get(string tripName)
-	    {
+		public IActionResult Get(string tripName)
+		{
 			try
 			{
 				return Ok
@@ -88,41 +92,46 @@ namespace WACe001.Controller.Api
 				Logger.LogError(ex, $"Error retrieving stops:  {ex}");
 			} // catch
 
-		    return BadRequest();
-	    }
+			return BadRequest();
+		}
 
-		/// <summary>
-		/// Create a new stop (for a trip) by trip name.
-		/// POST: api/trip/{tripName}/stop
-		/// </summary>
-		/// <param name="tripName">
-		/// 
-		/// </param>
-		/// <param name="stopViewModel">
-		/// 
-		/// </param>
+		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Implement and use geo-location service (to get location coordinates).
 		/// </remarks>
 		[HttpPost]
-        public async Task<IActionResult> Post(string tripName, [FromBody]StopViewModel stopViewModel)
+		public async Task<IActionResult> Post(string tripName, [FromBody]StopViewModel stopViewModel)
 		{
 			if (ModelState.IsValid)
 			{
 				var stop = Mapper.Map<Stop>(stopViewModel);
 
-				// todo|jdevl32: implement geo-location service (for stop coordinates) !!!
+				// Get geo-location service results.
+				var result = await GeoLocationService.GetCoordinatesAsync(stop.Name);
 
-				TravelRepository.AddStop(tripName, stop);
-
-				if (await TravelRepository.SaveChangesAsync())
+				if (result.Success)
 				{
-					// Use map in case database modified the stop in any way.
-					var value = Mapper.Map<StopViewModel>(stop);
+					// Get coordinates from service result (and using mapping).
+					stop.Coordinate = Mapper.Map<Coordinate>(result.Coordinate);
 
-					// todo|jdevl32: contant(s)...
-					return Created($"/api/trip/{tripName}/stop/{value.Name}", value);
+					// Add stop to the repository (database).
+					TravelRepository.AddStop(tripName, stop);
+
+					// todo|jdevl32: !!! fix (fails on coordinate ???) !!!
+					if (await TravelRepository.SaveChangesAsync())
+					{
+						// Use map in case database modified the stop in any way.
+						var value = Mapper.Map<StopViewModel>(stop);
+
+						// todo|jdevl32: contant(s)...
+						return Created($"/api/trip/{tripName}/stop/{value.Name}", value);
+					} // if
 				} // if
+				else
+				{
+					Logger.LogError(result.Message);
+				} // else
 			} // if
 			else if (HostingEnvironment.IsDevelopment())
 			{
@@ -131,19 +140,19 @@ namespace WACe001.Controller.Api
 
 			return BadRequest();
 		}
-        
-        // PUT: api/Stop/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-        
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+		
+		// PUT: api/Stop/5
+		[HttpPut("{id}")]
+		public void Put(int id, [FromBody]string value)
+		{
+		}
+		
+		// DELETE: api/ApiWithActions/5
+		[HttpDelete("{id}")]
+		public void Delete(int id)
+		{
+		}
 
-    }
+	}
 
 }
