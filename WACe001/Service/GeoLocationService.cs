@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Threading.Tasks;
 using WACe001.Model;
@@ -8,17 +9,22 @@ namespace WACe001.Service
 {
 
 	public class GeoLocationService
+		:
+		ServiceBase<GeoLocationService>
 	{
 
 #region Property
-
-		public ILogger<GeoLocationService> Logger { get; }
 
 #endregion
 
 #region Instance Initialization
 
-		public GeoLocationService(ILogger<GeoLocationService> logger) => Logger = logger;
+		/// <inheritdoc />
+		public GeoLocationService(IConfigurationRoot configurationRoot, ILogger<GeoLocationService> logger)
+			:
+			base(configurationRoot, logger)
+		{
+		}
 
 #endregion
 

@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-using WACe001.Service.Interface;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace WACe001.Service
 {
@@ -12,9 +12,14 @@ namespace WACe001.Service
 #region Instance Initialization
 
 		/// <inheritdoc />
-		public FakeMailService(ILogger<IMailService> logger)
+		/// <remarks>
+		/// Last modification:
+		/// Add configuration root (due to re-implementation of base).
+		/// Re-base logger type.
+		/// </remarks>
+		public FakeMailService(IConfigurationRoot configurationRoot, ILogger<FakeMailService> logger)
 			:
-			base(logger)
+			base(configurationRoot, logger)
 		{
 		}
 

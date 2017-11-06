@@ -1,40 +1,35 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using WACe001.Service.Interface;
 
 namespace WACe001.Service
 {
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <remarks>
+	/// Last modification:
+	/// Re-base to service base.
+	/// </remarks>
 	public abstract class MailServiceBase
 		:
+		ServiceBase<MailServiceBase>
+		,
 		IMailService
 	{
 
 #region Property
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <remarks>
-		/// 
-		/// </remarks>
-		protected ILogger<IMailService> Logger { get; }
-
 #endregion
 
 #region Instance Initialization
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="logger">
-		/// 
-		/// </param>
-		/// <remarks>
-		/// 
-		/// </remarks>
-		protected MailServiceBase(ILogger<IMailService> logger)
+		/// <inheritdoc />
+		protected MailServiceBase(IConfigurationRoot configurationRoot, ILogger<MailServiceBase> logger)
+			:
+			base(configurationRoot, logger)
 		{
-			Logger = logger;
 		}
 
 #endregion
