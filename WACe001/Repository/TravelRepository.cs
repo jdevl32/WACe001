@@ -35,6 +35,7 @@ namespace WACe001.Repository
 		/// 
 		/// </param>
 		/// <remarks>
+		/// Last modification:
 		/// Add logger.
 		/// </remarks>
 		public TravelRepository(ILogger<ITravelRepository>logger, TravelContext travelContext)
@@ -44,6 +45,27 @@ namespace WACe001.Repository
 		}
 
 #endregion
+
+		/// <inheritdoc />
+		public bool AddStop(string tripName, Stop stop)
+		{
+			var trip = GetTrip(tripName);
+
+			if (null == trip)
+			{
+				return false;
+			} // if
+
+			// todo|jdevl32: additional logic to (correctly) assign stop order ???
+
+			// add the stop to trip (create foreign key)
+			trip.Stops.Add(stop);
+
+			// add the stop (itself)
+			TravelContext.Stops.Add(stop);
+
+			return true;
+		}
 
 		/// <inheritdoc />
 		public void AddTrip(Trip trip) => TravelContext.Trips.Add(trip);

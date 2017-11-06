@@ -96,10 +96,10 @@ namespace WACe001.Controller.Api
 
 				if (await TravelRepository.SaveChangesAsync())
 				{
-					// todo|jdevl32: contant(s)...
 					// Use map in case database modified the trip in any way.
 					var value = Mapper.Map<TripViewModel>(trip);
 
+					// todo|jdevl32: contant(s)...
 					return Created($"/api/trip/{value.Name}", value);
 				} // if
 			} // if

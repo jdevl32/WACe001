@@ -14,20 +14,35 @@ namespace WACe001.ViewModel
 #region Property
 
 		/// <inheritdoc />
+		/// <remarks>
+		/// Setter is required.
+		/// Last modified:
+		/// Implement setter.
+		/// </remarks>
 		[Required]
 		[StringLength(100, MinimumLength = 1)]
-		public string Name { get; }
+		public string Name { get; set; }
 
 		/// <inheritdoc />
+		/// <remarks>
+		/// Setter is required.
+		/// Last modified:
+		/// Implement setter.
+		/// </remarks>
 		[Required]
-		public int Order { get; }
+		public int Order { get; set; }
 
 		/// <inheritdoc />
 		public ICoordinate Coordinate { get; }
 
 		/// <inheritdoc />
+		/// <remarks>
+		/// Setter is required.
+		/// Last modified:
+		/// Implement setter.
+		/// </remarks>
 		[Required]
-		public DateTime Arrival { get; }
+		public DateTime Arrival { get; set; }
 
 #endregion
 
@@ -81,22 +96,22 @@ namespace WACe001.ViewModel
 
 		/// <inheritdoc />
 		/// <summary>
-		/// 
+		/// Create a stop view model using all available properties.
 		/// </summary>
 		/// <param name="name">
-		/// 
+		/// The name of the stop.
 		/// </param>
 		/// <param name="order">
-		/// 
+		/// The order in which the stop was made (relavant to all other stops).
 		/// </param>
 		/// <param name="arrival">
-		/// 
+		/// The arrival timestamp of the stop.
 		/// </param>
 		/// <param name="coordinate">
-		/// 
+		/// The coordinates of the stop.
 		/// </param>
 		/// <remarks>
-		/// 
+		/// Last modification:
 		/// </remarks>
 		public StopViewModel(string name, int order, DateTime arrival, ICoordinate coordinate)
 			:

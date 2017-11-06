@@ -12,9 +12,7 @@ namespace WACe001.ViewModel
 
 #region Property
 
-		/// <summary>
-		/// 
-		/// </summary>
+		/// <inheritdoc />
 		/// <remarks>
 		/// Setter is required.
 		/// Last modified:
@@ -24,9 +22,7 @@ namespace WACe001.ViewModel
 		[StringLength(100, MinimumLength = 1)]
 		public string Name { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
+		/// <inheritdoc />
 		/// <remarks>
 		/// Setter is required.
 		/// Last modified:

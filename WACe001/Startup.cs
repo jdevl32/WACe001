@@ -43,17 +43,16 @@ namespace WACe001
 		private static IConfigurationRoot BuildConfiguration(IHostingEnvironment hostingEnvironment) => new ConfigurationBuilder().SetBasePath(hostingEnvironment.ContentRootPath).AddJsonFile("Config/appsettings.json").AddEnvironmentVariables().Build();
 
 		/// <summary>
-		/// 
+		/// Configure services for the application.
 		/// </summary>
 		/// <param name="services">
-		/// 
+		/// The services to configure.
 		/// </param>
 		/// <remarks>
 		/// This method gets called by the runtime. Use this method to add services to the container.
 		/// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		/// Last modification:
-		/// Set camel case contract resolver.
-		/// Add scoped dependency injection for stop and trip interfaces and implementations.
+		/// Add scoped dependency injection for coordinate interface and implementation.
 		/// </remarks>
 		public void ConfigureServices(IServiceCollection services)
 		{
@@ -69,6 +68,7 @@ namespace WACe001
 				);
 
 			services.AddScoped<IAppController, AppController>();
+			services.AddScoped<ICoordinate, Coordinate>();
 
 			// todo|jdevl32: check other environment(s)
 			if (HostingEnvironment.IsDevelopment())
