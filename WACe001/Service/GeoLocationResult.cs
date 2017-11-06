@@ -12,13 +12,13 @@ namespace WACe001.Service
 #region Property
 
 		/// <inheritdoc />
-		public bool Success { get; }
+		public bool Success { get; set; }
 
 		/// <inheritdoc />
-		public string Message { get; }
+		public string Message { get; set; }
 
 		/// <inheritdoc />
-		public ICoordinate Coordinate { get; }
+		public ICoordinate Coordinate { get; set; }
 
 #endregion
 

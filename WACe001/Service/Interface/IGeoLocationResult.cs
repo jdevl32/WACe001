@@ -15,8 +15,9 @@ namespace WACe001.Service.Interface
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Add setter -- required for geo-location service.
 		/// </remarks>
-		ICoordinate Coordinate { get; }
+		ICoordinate Coordinate { get; set; }
 
 #endregion
 

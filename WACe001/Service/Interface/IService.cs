@@ -3,7 +3,14 @@ using Microsoft.Extensions.Configuration;
 namespace WACe001.Service.Interface
 {
 
-	public interface IServiceBase
+	/// <summary>
+	/// Interface for services.
+	/// </summary>
+	/// <remarks>
+	/// Last modification:
+	/// Removed "Base" suffix.
+	/// </remarks>
+	public interface IService
 	{
 
 #region Property

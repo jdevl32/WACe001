@@ -16,7 +16,7 @@ namespace WACe001.Service
 	/// </remarks>
 	public abstract class ServiceBase<TDerivedClass>
 		:
-		IServiceBase
+		IService
 		where TDerivedClass : class 
 	{
 

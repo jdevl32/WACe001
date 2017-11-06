@@ -50,7 +50,8 @@ namespace WACe001
 		/// This method gets called by the runtime. Use this method to add services to the container.
 		/// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		/// Last modification:
-		/// Remove non-true services.
+		/// Remove non-"true services".
+		/// Add transient dependency injection for geo-location service interface and implementation.
 		/// </remarks>
 		public void ConfigureServices(IServiceCollection services)
 		{
@@ -86,6 +87,7 @@ namespace WACe001
 			//services.AddScoped<ITrip, Trip>();
 			//services.AddScoped<ITripViewModel, TripViewModel>();
 			services.AddSingleton(ConfigurationRoot);
+			services.AddTransient<IGeoLocationService, GeoLocationService>();
 			services.AddTransient<ITravelContextSeed, TravelContextSeed>();
 		}
 
