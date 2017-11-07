@@ -15,16 +15,26 @@ namespace WACe001.Controller.Web.Interface
 		IActionResult Contact(ContactViewModel model);
 
 		/// <summary>
-		/// 
+		/// Default action for the controller.
 		/// </summary>
 		/// <returns>
 		/// 
 		/// </returns>
 		/// <remarks>
-		/// 
+		/// Last modification:
 		/// </remarks>
 		IActionResult Index();
 
+		/// <summary>
+		/// Action for authenicated users to view their trips.
+		/// </summary>
+		/// <returns>
+		/// 
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		IActionResult Trips();
 	}
 
 }

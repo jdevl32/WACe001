@@ -1,34 +1,12 @@
 ﻿
-@model IEnumerable<WACe001.Entity.Interface.ITrip>
 @{
 	ViewBag.Title = "Homey don't play dat!";
 }
 
 <div class="row">
-	<div class="col-md-6">
-		<h1>WACe001</h1>
-		<p>Patience, my son!</p>
-		<form>
-			<div class="form-group">
-				<label>What time it was:</label>
-				<input class="form-control" type="text" />
-			</div>
-			<div class="form-group">
-				<label>Where it was:</label>
-				<input class="form-control" type="text" />
-			</div>
-			<div class="form-group">
-				<input class="btn btn-primary" type="submit" value="Add it!" />
-			</div>
-		</form>
-	</div>
-	<div class="col-md-6">
-		<h2>What went down</h2>
-		<ul>
-			@foreach (var trip in Model)
-			{
-				<li>@trip.Name : @trip.CreateTimestamp.ToShortDateString()</li>
-			}
-		</ul>
+	<div class="col-md-12">
+		<h1>WACe001 welcomes you!</h1>
+		<p>You made it this far -- why not continue further?!</p>
+		<a asp-controller="App" asp-action="Trips" class="btn btn-lg btn-primary">View my trips</a>
 	</div>
 </div>

@@ -17,6 +17,7 @@
     },
     "WACe001": {
       "commandName": "Project",
+      "launchBrowser": true,
       "environmentVariables": {
         "Contact__Email__To": "over@ride.com",
         "ASPNETCORE_ENVIRONMENT": "Development"

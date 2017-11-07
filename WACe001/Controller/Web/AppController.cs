@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -93,17 +94,23 @@ namespace WACe001.Controller.Web
 		}
 
 		/// <inheritdoc />
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns>
-		/// 
-		/// </returns>
 		/// <remarks>
 		/// Last modification:
-		/// Implement error logging.
+		/// Move functionality to trips action.
 		/// </remarks>
 		public IActionResult Index()
+		{
+			return View();
+		}
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// Move functionality from default action.
+		/// Implement authentication.
+		/// </remarks>
+		[Authorize]
+		public IActionResult Trips()
 		{
 			try
 			{
