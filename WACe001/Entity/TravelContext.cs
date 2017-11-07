@@ -5,33 +5,60 @@ using WACe001.Entity.Interface;
 namespace WACe001.Entity
 {
 
-    public class TravelContext
+	public class TravelContext
 		:
 		DbContext
 		,
 		ITravelContext
-    {
+	{
 
 #region Property
 
-		private IConfigurationRoot ConfigurationRoot { get; }
+		/// <inheritdoc />
+		public IConfigurationRoot ConfigurationRoot { get; }
 
 		/// <inheritdoc />
-		public DbSet<Stop> Stops { get; set; }
+		public DbSet<Coordinate> Coordinate { get; set; }
 
 		/// <inheritdoc />
-		public DbSet<Trip> Trips { get; set; }
+		public DbSet<Stop> Stop { get; set; }
+
+		/// <inheritdoc />
+		public DbSet<Trip> Trip { get; set; }
 
 #endregion
 
 #region Instance Initialization
 
+		/// <inheritdoc />
+		/// <summary>
+		/// Create a travel context.
+		/// </summary>
+		/// <param name="configurationRoot">
+		/// 
+		/// </param>
+		/// <param name="dbContextOptions">
+		/// 
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
 		public TravelContext(IConfigurationRoot configurationRoot, DbContextOptions dbContextOptions)
 			:
 			base(dbContextOptions) => ConfigurationRoot = configurationRoot;
 
 #endregion
 
+		/// <inheritdoc />
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="optionsBuilder">
+		/// 
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			base.OnConfiguring(optionsBuilder);
@@ -43,9 +70,11 @@ namespace WACe001.Entity
 		/// 
 		/// </summary>
 		/// <param name="modelBuilder">
+		/// 
 		/// </param>
 		/// <remarks>
 		/// This is required to support the Coordinate composite primary key.
+		/// Last modification:
 		/// </remarks>
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

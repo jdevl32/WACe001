@@ -139,6 +139,7 @@ namespace WACe001
 				);
 
 			applicationBuilder.UseStaticFiles();
+			// Enable/disable as needed (i.e., disable when rebuilding database).
 			travelContextSeed.EnsureSeed().Wait();
 			loggerFactory.AddDebug(logLevel);
 		}

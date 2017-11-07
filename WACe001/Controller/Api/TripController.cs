@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WACe001.Controller.Api.Interface;
 using WACe001.Entity;
 using WACe001.Repository.Interface;
 using WACe001.ViewModel;
@@ -12,7 +13,6 @@ using WACe001.ViewModel;
 namespace WACe001.Controller.Api
 {
 
-	/// <inheritdoc />
 	/// <summary>
 	/// 
 	/// </summary>
@@ -21,11 +21,13 @@ namespace WACe001.Controller.Api
 	/// Re-implement with generic base class.
 	/// </remarks>
 	[Produces("application/json")]
-    [Route("api/trip")]
-    public class TripController
+	[Route("api/trip")]
+	public class TripController
 		:
 		ApiControllerBase<TripController>
-    {
+		,
+		ITripController
+	{
 
 #region Instance Initialization
 
@@ -38,20 +40,14 @@ namespace WACe001.Controller.Api
 
 #endregion
 
-		/// <summary>
-		/// Get the entire set of trips.
-		/// GET: api/Trip
-		/// </summary>
-		/// <returns>
-		/// 
-		/// </returns>
+		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
 		/// Remove obsolete override.
 		/// </remarks>
 		[HttpGet]
-        public IActionResult Get()
-	    {
+		public IActionResult Get()
+		{
 			try
 			{
 				return Ok(Mapper.Map<IEnumerable<TripViewModel>>(TravelRepository.GetTrips()));
@@ -61,32 +57,22 @@ namespace WACe001.Controller.Api
 				Logger.LogError(ex, $"Error retrieving trips:  {ex}");
 			}
 
-		    return BadRequest();
-	    }
+			return BadRequest();
+		}
 
 		// GET: api/Trip/5
 		[HttpGet("{id}", Name = "GetTrip")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+		public string Get(int id)
+		{
+			return "value";
+		}
 
-	    /// <summary>
-	    /// Create a new trip.
-	    /// POST: api/Trip
-	    /// </summary>
-	    /// <param name="tripViewModel">
-	    /// 
-	    /// </param>
-	    /// <returns>
-	    /// 
-	    /// </returns>
-	    /// <remarks>
-	    /// Last modification:
-	    /// Modify signature to return async task.
-	    /// </remarks>
-	    [HttpPost]
-        public async Task<IActionResult> Post([FromBody] TripViewModel tripViewModel)
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		[HttpPost]
+		public async Task<IActionResult> Post([FromBody] TripViewModel tripViewModel)
 		{
 			if (ModelState.IsValid)
 			{
@@ -110,19 +96,19 @@ namespace WACe001.Controller.Api
 
 			return BadRequest();
 		}
-        
-        // PUT: api/Trip/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-        
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+		
+		// PUT: api/Trip/5
+		[HttpPut("{id}")]
+		public void Put(int id, [FromBody]string value)
+		{
+		}
+		
+		// DELETE: api/ApiWithActions/5
+		[HttpDelete("{id}")]
+		public void Delete(int id)
+		{
+		}
 
-    }
+	}
 
 }

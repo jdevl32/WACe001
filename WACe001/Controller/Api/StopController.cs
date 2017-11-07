@@ -20,7 +20,7 @@ namespace WACe001.Controller.Api
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// 
+	/// Implement interface.
 	/// </remarks>
 	[Produces("application/json")]
 	[Route("api/trip/{tripName}/stop")]
@@ -112,7 +112,9 @@ namespace WACe001.Controller.Api
 
 				if (result.Success)
 				{
-					// Get coordinates from service result (and using mapping).
+					// todo|jdevl32: ??? coordinate probably needs to be added here (and checked for uniqueness) ???
+
+					// Get coordinates from service result (and map).
 					stop.Coordinate = Mapper.Map<Coordinate>(result.Coordinate);
 
 					// Add stop to the repository (database).
