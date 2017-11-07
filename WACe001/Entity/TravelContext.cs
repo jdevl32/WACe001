@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WACe001.Entity.Interface;
 
@@ -21,6 +22,9 @@ namespace WACe001.Entity
 		public DbSet<Coordinate> Coordinate { get; set; }
 
 		/// <inheritdoc />
+		public IHostingEnvironment HostingEnvironment { get; }
+
+		/// <inheritdoc />
 		public DbSet<Stop> Stop { get; set; }
 
 		/// <inheritdoc />
@@ -34,18 +38,26 @@ namespace WACe001.Entity
 		/// <summary>
 		/// Create a travel context.
 		/// </summary>
-		/// <param name="configurationRoot">
-		/// 
-		/// </param>
 		/// <param name="dbContextOptions">
-		/// 
+		/// The database context options.
+		/// </param>
+		/// <param name="configurationRoot">
+		/// The configuration root.
+		/// </param>
+		/// <param name="hostingEnvironment">
+		/// The hosting environment of the application.
 		/// </param>
 		/// <remarks>
 		/// Last modification:
+		/// Add hosting environment.
 		/// </remarks>
-		public TravelContext(IConfigurationRoot configurationRoot, DbContextOptions dbContextOptions)
+		public TravelContext(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment)
 			:
-			base(dbContextOptions) => ConfigurationRoot = configurationRoot;
+			base(dbContextOptions)
+		{
+			ConfigurationRoot = configurationRoot;
+			HostingEnvironment = hostingEnvironment;
+		}
 
 #endregion
 
@@ -58,10 +70,17 @@ namespace WACe001.Entity
 		/// </param>
 		/// <remarks>
 		/// Last modification:
+		/// Enable sensitive data logging (depending on hosting environment).
 		/// </remarks>
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			base.OnConfiguring(optionsBuilder);
+
+			if (HostingEnvironment.IsDevelopment())
+			{
+				optionsBuilder.EnableSensitiveDataLogging();
+			} // if
+
 			optionsBuilder.UseSqlServer(ConfigurationRoot["ConnectionStrings:TravelConnection"]);
 		}
 

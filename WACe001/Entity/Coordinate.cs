@@ -1,11 +1,21 @@
-﻿using WACe001.Entity.Interface;
+﻿using System;
+using WACe001.Entity.Interface;
 
 namespace WACe001.Entity
 {
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <remarks>
+	/// Last modification:
+	/// Implement equatable interface.
+	/// </remarks>
 	public class Coordinate
 		:
 		ICoordinate
+		,
+		IEquatable<Coordinate>
 	{
 
 #region Property
@@ -54,6 +64,60 @@ namespace WACe001.Entity
 
 		/// <inheritdoc />
 		public override string ToString() => $"[({Latitude},{Longitude})]";
+
+#endregion
+
+#region Equality members
+
+		/// <inheritdoc />
+		public bool Equals(Coordinate other)
+		{
+			if (ReferenceEquals(null, other))
+			{
+				return false;
+			}
+
+			if (ReferenceEquals(this, other))
+			{
+				return true;
+			}
+
+			return Latitude.Equals(other.Latitude) && Longitude.Equals(other.Longitude);
+		}
+
+		/// <inheritdoc />
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj))
+			{
+				return false;
+			}
+
+			if (ReferenceEquals(this, obj))
+			{
+				return true;
+			}
+
+			if (obj.GetType() != GetType())
+			{
+				return false;
+			}
+
+			return Equals((Coordinate) obj);
+		}
+
+		/// <inheritdoc />
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return (Latitude.GetHashCode() * 397) ^ Longitude.GetHashCode();
+			}
+		}
+
+		public static bool operator ==(Coordinate left, Coordinate right) => Equals(left, right);
+
+		public static bool operator !=(Coordinate left, Coordinate right) => !Equals(left, right);
 
 #endregion
 

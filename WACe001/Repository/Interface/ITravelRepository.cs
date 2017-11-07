@@ -37,6 +37,8 @@ namespace WACe001.Repository.Interface
 		/// </remarks>
 		void AddTrip(Trip trip);
 
+		bool AddUniqueCoordinate(Coordinate coordinate);
+
 		/// <summary>
 		/// Get the trip by name.
 		/// </summary>

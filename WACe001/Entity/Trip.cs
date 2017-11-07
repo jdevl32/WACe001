@@ -5,10 +5,17 @@ using WACe001.Entity.Interface;
 namespace WACe001.Entity
 {
 
+	/// <summary>
+	/// A trip (to be logged as travel).
+	/// </summary>
+	/// <remarks>
+	/// Last modification:
+	/// Add object to-string override.
+	/// </remarks>
 	public class Trip
 		:
 		ITrip
-    {
+	{
 
 #region Property
 
@@ -32,7 +39,7 @@ namespace WACe001.Entity
 #region Instance Initialization
 
 		/// <summary>
-		/// 
+		/// Create a new (empty) trip.
 		/// </summary>
 		/// <remarks>
 		/// Parameterless constructor required by Entity Framework.
@@ -42,10 +49,10 @@ namespace WACe001.Entity
 		}
 
 		/// <summary>
-		/// 
+		/// Create a new trip.
 		/// </summary>
 		/// <param name="name">
-		/// Name of the trip.
+		/// The name of the trip.
 		/// </param>
 		/// <remarks>
 		/// Simple constructor (mainly for testing).
@@ -55,6 +62,25 @@ namespace WACe001.Entity
 			Name = name;
 		}
 
+		/// <inheritdoc />
+		/// <summary>
+		/// Create a new trip.
+		/// </summary>
+		/// <param name="name">
+		/// The name of the trip.
+		/// </param>
+		/// <param name="createTimestamp">
+		/// The creation timestamp of the trip.
+		/// </param>
+		/// <param name="userName">
+		/// The name of the user associated with the trip.
+		/// </param>
+		/// <param name="stops">
+		/// The stops of the trip.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
 		public Trip(string name, DateTime createTimestamp, string userName, ICollection<Stop> stops)
 			:
 			this(name)
@@ -64,12 +90,41 @@ namespace WACe001.Entity
 			Stops = stops;
 		}
 
+		/// <inheritdoc />
+		/// <summary>
+		/// Create a new trip.
+		/// </summary>
+		/// <param name="id">
+		/// The unique id of the trip.
+		/// </param>
+		/// <param name="name">
+		/// The name of the trip.
+		/// </param>
+		/// <param name="createTimestamp">
+		/// The creation timestamp of the trip.
+		/// </param>
+		/// <param name="userName">
+		/// The name of the user associated with the trip.
+		/// </param>
+		/// <param name="stops">
+		/// The stops of the trip.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
 		public Trip(int id, string name, DateTime createTimestamp, string userName, ICollection<Stop> stops)
 			:
 			this(name, createTimestamp, userName, stops)
 		{
 			Id = id;
 		}
+
+#endregion
+
+#region Object
+
+		/// <inheritdoc />
+		public override string ToString() => $"[{nameof(Id)}={Id}|{nameof(Name)}={Name}|{nameof(CreateTimestamp)}={CreateTimestamp}|{nameof(UserName)}={UserName}|{nameof(Stops)}.{nameof(Stops.Count)}={Stops.Count}]";
 
 #endregion
 

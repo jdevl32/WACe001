@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace WACe001.Entity.Interface
 {
 
 	/// <summary>
-	/// 
+	/// The travel database context.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
@@ -34,6 +35,14 @@ namespace WACe001.Entity.Interface
 		/// Rename.
 		/// </remarks>
 		DbSet<Coordinate> Coordinate { get; }
+
+		/// <summary>
+		/// The hosting environment of the application.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		IHostingEnvironment HostingEnvironment { get; }
 
 		/// <summary>
 		/// 

@@ -89,7 +89,7 @@ namespace WACe001.Controller.Api
 			} // try
 			catch (Exception ex)
 			{
-				Logger.LogError(ex, $"Error retrieving stops:  {ex}");
+				Logger.LogError(ex, $"Error retrieving stops from trip \"{tripName}\":  {ex}");
 			} // catch
 
 			return BadRequest();
@@ -99,46 +99,58 @@ namespace WACe001.Controller.Api
 		/// <remarks>
 		/// Last modification:
 		/// Implement and use geo-location service (to get location coordinates).
+		/// Add exception handling.
 		/// </remarks>
 		[HttpPost]
 		public async Task<IActionResult> Post(string tripName, [FromBody]StopViewModel stopViewModel)
 		{
-			if (ModelState.IsValid)
+			try
 			{
-				var stop = Mapper.Map<Stop>(stopViewModel);
-
-				// Get geo-location service results.
-				var result = await GeoLocationService.GetCoordinatesAsync(stop.Name);
-
-				if (result.Success)
+				if (ModelState.IsValid)
 				{
-					// todo|jdevl32: ??? coordinate probably needs to be added here (and checked for uniqueness) ???
+					var stop = Mapper.Map<Stop>(stopViewModel);
 
-					// Get coordinates from service result (and map).
-					stop.Coordinate = Mapper.Map<Coordinate>(result.Coordinate);
+					// Get geo-location service results.
+					var result = await GeoLocationService.GetCoordinatesAsync(stop.Name);
 
-					// Add stop to the repository (database).
-					TravelRepository.AddStop(tripName, stop);
-
-					// todo|jdevl32: !!! fix (fails on coordinate ???) !!!
-					if (await TravelRepository.SaveChangesAsync())
+					if (result.Success)
 					{
-						// Use map in case database modified the stop in any way.
-						var value = Mapper.Map<StopViewModel>(stop);
 
-						// todo|jdevl32: contant(s)...
-						return Created($"/api/trip/{tripName}/stop/{value.Name}", value);
+						// todo|jdevl32: cleanup...
+						//if (TravelRepository.AddUniqueCoordinate(coordinate))
+						//{
+
+						//} // if
+
+						// Get coordinates from service result (and map).
+						stop.Coordinate = Mapper.Map<Coordinate>(result.Coordinate);
+
+						// Add stop to the repository (database).
+						TravelRepository.AddStop(tripName, stop);
+
+						if (await TravelRepository.SaveChangesAsync())
+						{
+							// Use map in case database modified the stop in any way.
+							var value = Mapper.Map<StopViewModel>(stop);
+
+							// todo|jdevl32: contant(s)...
+							return Created($"/api/trip/{tripName}/stop/{value.Name}", value);
+						} // if
 					} // if
+					else
+					{
+						Logger.LogError(result.Message);
+					} // else
 				} // if
-				else
+				else if (HostingEnvironment.IsDevelopment())
 				{
-					Logger.LogError(result.Message);
-				} // else
-			} // if
-			else if (HostingEnvironment.IsDevelopment())
+					return BadRequest(stopViewModel);
+				} // else if
+			} // try
+			catch (Exception ex)
 			{
-				return BadRequest(stopViewModel);
-			} // else if
+				Logger.LogError(ex, $"Error adding stop to trip \"{tripName}\":  {ex}");
+			} // catch
 
 			return BadRequest();
 		}

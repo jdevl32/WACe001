@@ -158,7 +158,9 @@ namespace WACe001
 				config =>
 				{
 					// todo|jdevl32: cleanup...
-					config.CreateMap<ICoordinate, Coordinate>().ReverseMap();
+					config.CreateMap<Coordinate, ICoordinate>()
+						.ConstructUsing(coordinate => new Coordinate(/*coordinate.Latitude, coordinate.Longitude*/))
+						.ReverseMap();
 					config.CreateMap<IStopViewModel, IStop>().ReverseMap();
 					//config.CreateMap<IStopViewModel, Stop>().ReverseMap();
 					config.CreateMap<ITripViewModel, ITrip>().ReverseMap();

@@ -60,13 +60,29 @@ namespace WACe001.Repository
 
 #endregion
 
+		public bool AddUniqueCoordinate(Coordinate coordinate)
+		{
+			Logger.LogInformation($"Add unique coordinate ({coordinate}) to travel context...");
+
+			if (null != TravelContext.Coordinate.Find(coordinate.Latitude, coordinate.Longitude))
+			{
+				return false;
+			} // if
+
+			TravelContext.Coordinate.Add(coordinate);
+			return true;
+		}
+
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
 		/// Implement addition of coordinates.
+		/// Add logging message.
 		/// </remarks>
 		public bool AddStop(string tripName, Stop stop)
 		{
+			Logger.LogInformation($"Add stop ({stop}) to trip \"{tripName}\" of travel context...");
+
 			var trip = GetTrip(tripName);
 
 			if (null == trip)
@@ -79,14 +95,14 @@ namespace WACe001.Repository
 			// Add the stop to the trip (create foreign key).
 			trip.Stops.Add(stop);
 
-			// todo|jdevl32: ??? may need to add coordinates earlier ???
-			{
-				if (null != stop.Coordinate)
-				{
-					// Add the coordinate (itself).
-					TravelContext.Coordinate.Add(stop.Coordinate);
-				} // if
-			}
+			// todo|jdevl32: cleanup...
+			//{
+			//	if (null != stop.Coordinate)
+			//	{
+			//		// Add the coordinate (itself).
+			//		TravelContext.Coordinate.Add(stop.Coordinate);
+			//	} // if
+			//}
 
 			// Add the stop (itself).
 			TravelContext.Stop.Add(stop);
@@ -95,7 +111,16 @@ namespace WACe001.Repository
 		}
 
 		/// <inheritdoc />
-		public void AddTrip(Trip trip) => TravelContext.Trip.Add(trip);
+		/// <remarks>
+		/// Last modification:
+		/// Add logging message.
+		/// </remarks>
+		public void AddTrip(Trip trip)
+		{
+			Logger.LogInformation($"Add trip ({trip}) to travel context...");
+
+			TravelContext.Trip.Add(trip);
+		}
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -104,7 +129,7 @@ namespace WACe001.Repository
 		/// </remarks>
 		public ITrip GetTrip(string name)
 		{
-			Logger.LogInformation($"Get trip [{name}] from travel context...");
+			Logger.LogInformation($"Get trip \"{name}\" from travel context...");
 
 			// todo|jdevl32: replace with procedure implemented by context ???
 			return TravelContext.Trip

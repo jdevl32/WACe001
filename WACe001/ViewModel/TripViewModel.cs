@@ -5,6 +5,11 @@ using WACe001.ViewModel.Interface;
 namespace WACe001.ViewModel
 {
 
+	/// <inheritdoc />
+	/// <remarks>
+	/// Last modification:
+	/// Add object to-string override.
+	/// </remarks>
 	public class TripViewModel
 		:
 		ITripViewModel
@@ -70,6 +75,13 @@ namespace WACe001.ViewModel
 		public TripViewModel(string name, DateTime createTimestamp)
 			:
 			this(name) => CreateTimestamp = createTimestamp;
+
+#endregion
+
+#region Object
+
+		/// <inheritdoc />
+		public override string ToString() => $"[{nameof(Name)}={Name}|{nameof(CreateTimestamp)}={CreateTimestamp}]";
 
 #endregion
 
