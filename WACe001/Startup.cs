@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -49,13 +50,34 @@ namespace WACe001
 		/// <remarks>
 		/// This method gets called by the runtime. Use this method to add services to the container.
 		/// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+		/// For more information on Core 1.x -> 2.x migration, visit https://docs.microsoft.com/en-us/aspnet/core/migration/1x-to-2x/identity-2x
 		/// Last modification:
-		/// Remove non-"true services".
-		/// Add transient dependency injection for geo-location service interface and implementation.
+		/// Add identity service configuration.
 		/// </remarks>
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContext<TravelContext>();
+
+			services
+				.AddIdentity<Traveler, IdentityRole>
+					(
+						identityOptions =>
+						{
+							identityOptions.Password.RequiredLength = 5;
+							identityOptions.User.RequireUniqueEmail = true;
+						}
+					)
+				.AddEntityFrameworkStores<TravelContext>();
+
+			// Application cookie is no longer part of identity options (above).
+			services.ConfigureApplicationCookie
+				(
+					options =>
+					{
+						options.LoginPath = "/Auth/Login";
+					}
+				);
+
 			services.AddLogging();
 
 			services.AddMvc().AddJsonOptions
@@ -92,24 +114,24 @@ namespace WACe001
 		}
 
 		/// <summary>
-		/// 
+		/// Configure the application.
 		/// </summary>
 		/// <param name="applicationBuilder">
-		/// 
+		/// The application builder.
 		/// </param>
 		/// <param name="hostingEnvironment">
-		/// 
+		/// The hosting environment.
 		/// </param>
 		/// <param name="loggerFactory">
-		/// 
+		/// The logger factory.
 		/// </param>
 		/// <param name="travelContextSeed">
-		/// 
+		/// The travel database context seeder.
 		/// </param>
 		/// <remarks>
 		/// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		/// Last modification:
-		/// Configure auto-mapper.
+		/// Configure authentication.
 		/// </remarks>
 		public void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, ITravelContextSeed travelContextSeed)
 		{
@@ -123,29 +145,42 @@ namespace WACe001
 				applicationBuilder.UseDeveloperExceptionPage();
 			}
 
+			loggerFactory.AddDebug(logLevel);
+
+			//
+			// Order is impoortant:
+			// 
+
+			// 1. Static files.
+			applicationBuilder.UseStaticFiles();
+
+			// 2. Authentication
+			// todo|jdevl32: verify...
+			// Method "UseIdentity" is obsolete -- this is the replacement.
+			applicationBuilder.UseAuthentication();
+
+			// 3. MVC -- typically last
 			applicationBuilder.UseMvc
 				(
 					routeBuilder =>
 					{
 						routeBuilder.MapRoute
-						(
-							"Default"
-							,
-							"{controller}/{action}/{id?}"
-							,
-							new {controller = "App", action = "Index"}
-						);
+							(
+								"Default"
+								,
+								"{controller}/{action}/{id?}"
+								,
+								new {controller = "App", action = "Index"}
+							);
 					}
 				);
 
-			applicationBuilder.UseStaticFiles();
 			// Enable/disable as needed (i.e., disable when rebuilding database).
 			travelContextSeed.Seed().Wait();
-			loggerFactory.AddDebug(logLevel);
 		}
 
 		/// <summary>
-		/// 
+		/// Initialize and configure auto-mapper mappings.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
@@ -155,20 +190,20 @@ namespace WACe001
 		{
 			Mapper.Initialize
 			(
-				config =>
+				expression =>
 				{
 					// todo|jdevl32: cleanup...
-					config.CreateMap<Coordinate, ICoordinate>()
+					expression.CreateMap<Coordinate, ICoordinate>()
 						.ConstructUsing(coordinate => new Coordinate(/*coordinate.Latitude, coordinate.Longitude*/))
 						.ReverseMap();
-					config.CreateMap<IStopViewModel, IStop>().ReverseMap();
+					expression.CreateMap<IStopViewModel, IStop>().ReverseMap();
 					//config.CreateMap<IStopViewModel, Stop>().ReverseMap();
-					config.CreateMap<ITripViewModel, ITrip>().ReverseMap();
+					expression.CreateMap<ITripViewModel, ITrip>().ReverseMap();
 					//config.CreateMap<ITripViewModel, Trip>().ReverseMap();
 					//config.CreateMap<StopViewModel, IStop>().ReverseMap();
-					config.CreateMap<StopViewModel, Stop>().ReverseMap();
+					expression.CreateMap<StopViewModel, Stop>().ReverseMap();
 					//config.CreateMap<TripViewModel, ITrip>().ReverseMap();
-					config.CreateMap<TripViewModel, Trip>().ReverseMap();
+					expression.CreateMap<TripViewModel, Trip>().ReverseMap();
 				}
 			);
 		}
