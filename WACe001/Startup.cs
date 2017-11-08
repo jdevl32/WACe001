@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -52,7 +53,7 @@ namespace WACe001
 		/// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		/// For more information on Core 1.x -> 2.x migration, visit https://docs.microsoft.com/en-us/aspnet/core/migration/1x-to-2x/identity-2x
 		/// Last modification:
-		/// Add identity service configuration.
+		/// Configure MVC for HTTPS.
 		/// </remarks>
 		public void ConfigureServices(IServiceCollection services)
 		{
@@ -80,13 +81,25 @@ namespace WACe001
 
 			services.AddLogging();
 
-			services.AddMvc().AddJsonOptions
-				(
-					mvcBuilder =>
-					{
-						mvcBuilder.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-					}
-				);
+			services
+				.AddMvc
+					(
+						mvcOptions =>
+						{
+							// todo|jdevl32: HTTPS only required in production ???
+							if (HostingEnvironment.IsProduction())
+							{
+								mvcOptions.Filters.Add(typeof(RequireHttpsAttribute));
+							} // if
+						}
+					)
+				.AddJsonOptions
+					(
+						mvcBuilder =>
+						{
+							mvcBuilder.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+						}
+					);
 
 			// todo|jdevl32: cleanup...
 			//services.AddScoped<IAppController, AppController>();

@@ -20,6 +20,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "Contact__Email__To": "over@ride.com",
+        "p_ASPNETCORE_ENVIRONMENT": "Production",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:59709/"
