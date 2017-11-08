@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WACe001.Entity.Interface;
@@ -6,9 +7,16 @@ using WACe001.Entity.Interface;
 namespace WACe001.Entity
 {
 
+	/// <summary>
+	/// The travel database context.
+	/// </summary>
+	/// <remarks>
+	/// Last modification:
+	/// Change base to identity database context (of traveler).
+	/// </remarks>
 	public class TravelContext
 		:
-		DbContext
+		IdentityDbContext<Traveler>
 		,
 		ITravelContext
 	{

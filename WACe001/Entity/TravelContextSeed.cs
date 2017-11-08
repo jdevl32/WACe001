@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,8 @@ namespace WACe001.Entity
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Add logger.
+	/// Add (traveler) user manager.
+	/// Add seeding of traveler.
 	/// </remarks>
 	public class TravelContextSeed
 		:
@@ -34,6 +36,9 @@ namespace WACe001.Entity
 		/// <inheritdoc />
 		public TravelContext TravelContext { get; }
 
+		/// <inheritdoc />
+		public UserManager<Traveler> UserManager { get; }
+
 #endregion
 
 #region Instance Initialization
@@ -42,29 +47,86 @@ namespace WACe001.Entity
 		/// <summary>
 		/// Create the seeder for the travel database context.
 		/// </summary>
+		/// <param name="logger">
+		/// The logger for the travel database context.
+		/// </param>
 		/// <param name="travelContext">
 		/// The travel database context.
 		/// </param>
+		/// <param name="userManager">
+		/// The (traveler) user manager.
+		/// </param>
 		/// <remarks>
 		/// Last modification:
+		/// Add the (traveler) user manager.
 		/// </remarks>
-		public TravelContextSeed(ILogger<TravelContextSeed> logger, TravelContext travelContext)
+		public TravelContextSeed(ILogger<TravelContextSeed> logger, TravelContext travelContext, UserManager<Traveler> userManager)
 		{
 			Logger = logger;
 			TravelContext = travelContext;
+			UserManager = userManager;
 		}
 
 #endregion
 
 		/// <inheritdoc />
-		public async Task EnsureSeed()
+		/// <remarks>
+		/// Implement seeding of traveler.
+		/// </remarks>
+		public async Task Seed()
 		{
+			Logger.LogInformation("Seed the travel database context...");
+
+			const string userName = "tbone";
+
+			await SeedTraveler(userName);
+			await SeedTrip(userName);
+		}
+
+		/// <summary>
+		/// Seed the traveler by username.
+		/// </summary>
+		/// <param name="userName">
+		/// The username of the traveler.
+		/// </param>
+		/// <returns>
+		/// 
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		private async Task SeedTraveler(string userName)
+		{
+			var email = $"{userName}@seinfeld.tv";
+
+			Logger.LogInformation($"Seed traveler \"{userName}\" ({email})...");
+
+			if (null == await UserManager.FindByEmailAsync(email))
+			{
+				await UserManager.CreateAsync(new Traveler {Email = email, UserName = userName}, "7L.Costanza");
+			} // if
+		}
+
+		/// <summary>
+		/// Seed trips and stops for traveler by username.
+		/// </summary>
+		/// <param name="userName">
+		/// The username of the traveler.
+		/// </param>
+		/// <returns>
+		/// 
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		private async Task SeedTrip(string userName)
+		{
+			Logger.LogInformation($"Seed trips (and stops) for traveler \"{userName}\"...");
+
 			if (TravelContext.Trip.Any())
 			{
 				return;
 			} // if
-
-			Logger.LogInformation("Seeding the travel database context...");
 
 			var now = DateTime.UtcNow;
 			const string tripNames = "AB";
@@ -79,8 +141,7 @@ namespace WACe001.Entity
 					,
 					now
 					,
-					// todo|jdevl32: fill username...
-					""
+					userName
 					,
 					// todo|jdevl32: ??? replace with inteface ???
 					new List<Stop>
@@ -99,7 +160,7 @@ namespace WACe001.Entity
 
 			await TravelContext.SaveChangesAsync();
 		}
-
+		
 	}
 
 }

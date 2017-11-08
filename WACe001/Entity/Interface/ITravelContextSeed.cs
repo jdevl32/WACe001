@@ -1,8 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace WACe001.Entity.Interface
 {
 
+	/// <summary>
+	/// The travel database context seeder.
+	/// </summary>
+	/// <remarks>
+	/// Last modification:
+	/// Add user manager (of traveler).
+	/// </remarks>
 	public interface ITravelContextSeed
 	{
 
@@ -17,18 +25,27 @@ namespace WACe001.Entity.Interface
 		/// </remarks>
 		TravelContext TravelContext { get; }
 
+		/// <summary>
+		/// The (traveler) user manager.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		UserManager<Traveler> UserManager { get; }
+
 #endregion
 
 		/// <summary>
-		/// 
+		/// Seed the database.
 		/// </summary>
 		/// <returns>
 		/// 
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Rename.
 		/// </remarks>
-		Task EnsureSeed();
+		Task Seed();
 
 	}
 
