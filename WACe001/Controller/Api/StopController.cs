@@ -100,8 +100,7 @@ namespace WACe001.Controller.Api
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Implement and use geo-location service (to get location coordinates).
-		/// Add exception handling.
+		/// Incorporate traveler (user).
 		/// </remarks>
 		[HttpPost]
 		public async Task<IActionResult> Post(string tripName, [FromBody]StopViewModel stopViewModel)
@@ -128,7 +127,7 @@ namespace WACe001.Controller.Api
 						stop.Coordinate = Mapper.Map<Coordinate>(result.Coordinate);
 
 						// Add stop to the repository (database).
-						TravelRepository.AddStop(tripName, stop);
+						TravelRepository.AddStop(User.Identity.Name, tripName, stop);
 
 						if (await TravelRepository.SaveChangesAsync())
 						{
