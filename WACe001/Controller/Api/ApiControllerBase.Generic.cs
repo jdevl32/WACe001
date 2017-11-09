@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using WACe001.Controller.Api.Interface;
 using WACe001.Repository.Interface;
@@ -14,8 +15,9 @@ namespace WACe001.Controller.Api
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Change access for hosting environment and travel repository interface implementations.
+	/// Add identity (authorization).
 	/// </remarks>
+	[Authorize]
 	public abstract class ApiControllerBase<TDerivedClass>
 		:
 		Microsoft.AspNetCore.Mvc.Controller

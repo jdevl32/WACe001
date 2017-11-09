@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using System.Threading.Tasks;
 using WACe001.Entity;
 using WACe001.Entity.Interface;
 using WACe001.Repository;
@@ -53,12 +55,13 @@ namespace WACe001
 		/// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		/// For more information on Core 1.x -> 2.x migration, visit https://docs.microsoft.com/en-us/aspnet/core/migration/1x-to-2x/identity-2x
 		/// Last modification:
-		/// Configure MVC for HTTPS.
+		/// Configure redirect to login (to setup identity authentication).
 		/// </remarks>
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContext<TravelContext>();
 
+			// todo|jdevl32: constant(s)...
 			services
 				.AddIdentity<Traveler, IdentityRole>
 					(
@@ -75,6 +78,26 @@ namespace WACe001
 				(
 					options =>
 					{
+						options.Events = new CookieAuthenticationEvents
+						{
+							// Take over responsibility for redirect to login.
+							OnRedirectToLogin = async context =>
+							{
+								// Only if the request is an API call and response status code ok (200).
+								if (context.Request.Path.StartsWithSegments("/api") && 200 == context.Response.StatusCode)
+								{
+									// Set the response status code to unauthorized (401).
+									context.Response.StatusCode = 401;
+								} // if
+								else
+								{
+									// Otherwise, simply redirect.
+									context.Response.Redirect(context.RedirectUri);
+								} // else
+
+								await Task.Yield();
+							}
+						};
 						options.LoginPath = "/Auth/Login";
 					}
 				);
