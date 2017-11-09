@@ -10,6 +10,7 @@ using WACe001.Repository.Interface;
 namespace WACe001.Repository
 {
 
+	/// <inheritdoc />
 	public class TravelRepository
 		:
 		ITravelRepository
@@ -148,9 +149,22 @@ namespace WACe001.Repository
 		/// </remarks>
 	    public IEnumerable<ITrip> GetTrips()
 		{
-			Logger.LogInformation("Get trips from travel context...");
-
 			return TravelContext.Trip.ToList();
+		}
+
+		/// <inheritdoc />
+		public IEnumerable<ITrip> GetTrips(string userName)
+		{
+			Logger.LogInformation($"Get trips by traveler (username) \"{userName}\" from travel context...");
+
+			// todo|jdevl32: replace with procedure implemented by context ???
+			return TravelContext.Trip
+				// Include the stops for each trip.
+				.Include(trip => trip.Stops)
+				// Include the coordinate for each stop.
+				.ThenInclude(stop => stop.Coordinate)
+				// Where the trip traveler (username) matches the input.
+				.Where(trip => trip.UserName.Equals(userName)).ToList();
 		}
 
 		/// <inheritdoc />

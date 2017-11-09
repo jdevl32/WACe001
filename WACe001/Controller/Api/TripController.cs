@@ -43,18 +43,20 @@ namespace WACe001.Controller.Api
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Remove obsolete override.
+		/// Restrict trips by traveler (authenticated username).
 		/// </remarks>
 		[HttpGet]
 		public IActionResult Get()
 		{
+			var userName = User.Identity.Name;
+
 			try
 			{
-				return Ok(Mapper.Map<IEnumerable<TripViewModel>>(TravelRepository.GetTrips()));
+				return Ok(Mapper.Map<IEnumerable<TripViewModel>>(TravelRepository.GetTrips(userName)));
 			}
 			catch (Exception ex)
 			{
-				Logger.LogError(ex, $"Error retrieving trips:  {ex}");
+				Logger.LogError(ex, $"Error retrieving trips by traveler (username) \"{userName}\":  {ex}");
 			}
 
 			return BadRequest();
@@ -70,7 +72,7 @@ namespace WACe001.Controller.Api
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add exception handling.
+		/// Incorporate traveler (authenticated username) for the trip.
 		/// </remarks>
 		[HttpPost]
 		public async Task<IActionResult> Post([FromBody] TripViewModel tripViewModel)
@@ -80,6 +82,7 @@ namespace WACe001.Controller.Api
 				if (ModelState.IsValid)
 				{
 					var trip = Mapper.Map<Trip>(tripViewModel);
+					trip.UserName = User.Identity.Name;
 
 					TravelRepository.AddTrip(trip);
 

@@ -6,6 +6,13 @@ using WACe001.Entity.Interface;
 namespace WACe001.Repository.Interface
 {
 
+	/// <summary>
+	/// The travel repository.
+	/// </summary>
+	/// <remarks>
+	/// Last modification:
+	/// Implement get trips by (traveler) username.
+	/// </remarks>
 	public interface ITravelRepository
 	{
 
@@ -63,6 +70,17 @@ namespace WACe001.Repository.Interface
 		/// Last modification:
 		/// </remarks>
 		IEnumerable<ITrip> GetTrips();
+
+		/// <summary>
+		/// Get the set of trips by (traveler) username.
+		/// </summary>
+		/// <returns>
+		/// The set of trips for the traveler.
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		IEnumerable<ITrip> GetTrips(string userName);
 
 		/// <summary>
 		/// 
