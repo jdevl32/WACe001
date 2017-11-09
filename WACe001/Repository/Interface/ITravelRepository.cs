@@ -11,13 +11,13 @@ namespace WACe001.Repository.Interface
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Implement get trips by (traveler) username.
+	/// Implement stop(s) and trip(s) by (traveler) username.
 	/// </remarks>
 	public interface ITravelRepository
 	{
 
 		/// <summary>
-		/// Add the stop (to the trip) by trip name.
+		/// Add the traveler (user) stop (to the trip) by trip name.
 		/// </summary>
 		/// <param name="tripName">
 		/// The name of the trip.
@@ -30,8 +30,9 @@ namespace WACe001.Repository.Interface
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Add traveler (user).
 		/// </remarks>
-		bool AddStop(string tripName, Stop stop);
+		bool AddStop(string userName, string tripName, Stop stop);
 
 		/// <summary>
 		/// Add the trip.
@@ -59,6 +60,23 @@ namespace WACe001.Repository.Interface
 		/// Last modification:
 		/// </remarks>
 		ITrip GetTrip(string name);
+
+		/// <summary>
+		/// Get the traveler (user) trip by name.
+		/// </summary>
+		/// <param name="userName">
+		/// The traveler (user) name.
+		/// </param>
+		/// <param name="tripName">
+		/// The name of the trip.
+		/// </param>
+		/// <returns>
+		/// The trip.
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		ITrip GetTrip(string userName, string tripName);
 
 		/// <summary>
 		/// Get the set of trips.

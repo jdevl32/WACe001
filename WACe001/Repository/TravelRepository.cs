@@ -75,16 +75,11 @@ namespace WACe001.Repository
 		}
 
 		/// <inheritdoc />
-		/// <remarks>
-		/// Last modification:
-		/// Implement addition of coordinates.
-		/// Add logging message.
-		/// </remarks>
-		public bool AddStop(string tripName, Stop stop)
+		public bool AddStop(string userName, string tripName, Stop stop)
 		{
-			Logger.LogInformation($"Add stop ({stop}) to trip \"{tripName}\" of travel context...");
+			Logger.LogInformation($"Add traveler (user) \"{userName}\" stop ({stop}) to trip \"{tripName}\" of travel context...");
 
-			var trip = GetTrip(tripName);
+			var trip = GetTrip(userName, tripName);
 
 			if (null == trip)
 			{
@@ -140,6 +135,21 @@ namespace WACe001.Repository
 				.ThenInclude(stop => stop.Coordinate)
 				// Where the trip name matches the input.
 				.FirstOrDefault(trip => trip.Name.Equals(name));
+		}
+
+		/// <inheritdoc />
+		public ITrip GetTrip(string userName, string tripName)
+		{
+			Logger.LogInformation($"Get traveler (user) \"{userName}\" trip \"{tripName}\" from travel context...");
+
+			// todo|jdevl32: replace with procedure implemented by context ???
+			return TravelContext.Trip
+				// Include the stops for each trip.
+				.Include(trip => trip.Stops)
+				// Include the coordinate for each stop.
+				.ThenInclude(stop => stop.Coordinate)
+				// Where the traveler (user) and trip name match the input.
+				.FirstOrDefault(trip => trip.Name.Equals(tripName) && trip.UserName.Equals(userName));
 		}
 
 		/// <inheritdoc />

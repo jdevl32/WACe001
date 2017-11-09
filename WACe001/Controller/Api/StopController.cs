@@ -72,24 +72,26 @@ namespace WACe001.Controller.Api
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Specify order clause.
+		/// Incorporate traveler (user).
 		/// </remarks>
-		[HttpGet(Name = "GetStopsByTripName")]
+		[HttpGet(Name = "GetTravelerStopsByTripName")]
 		public IActionResult Get(string tripName)
 		{
+			var userName = User.Identity.Name;
+
 			try
 			{
 				return Ok
 					(
 						Mapper.Map<IEnumerable<StopViewModel>>
 						(
-							TravelRepository.GetTrip(tripName).Stops.OrderBy(stop => stop.Order).ToList()
+							TravelRepository.GetTrip(userName, tripName).Stops.OrderBy(stop => stop.Order).ToList()
 						)
 					);
 			} // try
 			catch (Exception ex)
 			{
-				Logger.LogError(ex, $"Error retrieving stops from trip \"{tripName}\":  {ex}");
+				Logger.LogError(ex, $"Error retrieving traveler (user) \"{userName}\" stops from trip \"{tripName}\":  {ex}");
 			} // catch
 
 			return BadRequest();
