@@ -10,30 +10,29 @@
 		function trip()
 		{
 			var viewModel = this;
-			viewModel.trip =
-				[
-					{
-						name: "Angular [A] Trip"
-						,
-						createTimestamp: new Date()
-					}
-					,
-					{
-						name: "Angular [B] Trip"
-						,
-						createTimestamp: new Date()
-					}
-				];
 
-			// Create container for new trip.
+			// Create empty container for trip(s).
+			viewModel.trip = [];
+
+			// Create empty container for new trip.
 			viewModel.newTrip = {};
 
 			// Form submit handler.
 			viewModel.AddTrip =
 				function()
 				{
-					// todo|jdevl32: debug only...
-					alert(viewModel.newTrip.name);
+					// Add new trip to the container.
+					viewModel.trip.push
+						(
+							{
+								name: viewModel.newTrip.name
+								,
+								createTimestamp: new Date()
+							}
+						);
+
+					// Clear/reset new trip (form).
+					viewModel.newTrip = {};
 				};
 		}
 
