@@ -21,14 +21,23 @@
 				<td><a href="#" class="btn btn-sm btn-primary">Manage</a></td>
 			</tr>
 		</table>
-		<form>
+		<form name="newTrip" novalidate data-ng-submit="c.AddTrip()">
 			<div class="form-group">
-				<label>What time it was:</label>
-				<input class="form-control" type="text"/>
+				<label for="name">Trip Name:</label>
+				<input class="form-control" type="text" id="name" name="name" data-ng-model="c.newTrip.name"/>
 			</div>
 			<div class="form-group">
-				<label>Where it was:</label>
-				<input class="form-control" type="text"/>
+				<input class="btn btn-primary" type="submit" value="Add Trip" />
+			</div>
+		</form>
+		<form>
+			<div class="form-group">
+				<label for="arrival">What time it was:</label>
+				<input class="form-control" type="text" id="arrival" name="arrival"/>
+			</div>
+			<div class="form-group">
+				<label for="stop">Where it was:</label>
+				<input class="form-control" type="text" id="stop" name="stop"/>
 			</div>
 			<div class="form-group">
 				<input class="btn btn-primary" type="submit" value="Add it!"/>

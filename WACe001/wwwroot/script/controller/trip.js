@@ -24,6 +24,17 @@
 						createTimestamp: new Date()
 					}
 				];
+
+			// Create container for new trip.
+			viewModel.newTrip = {};
+
+			// Form submit handler.
+			viewModel.AddTrip =
+				function()
+				{
+					// todo|jdevl32: debug only...
+					alert(viewModel.newTrip.name);
+				};
 		}
 
 		// Use the existing module, specify controller.
