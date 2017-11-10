@@ -11,12 +11,16 @@
 	<script src="~/script/controller/trip.js"></script>
 }
 
-<div class="row" data-ng-app="app-trip" data-ng-controller="trip as trip">
+<div class="row" data-ng-app="app-trip" data-ng-controller="trip as c">
 	<div class="col-md-6">
 		<h1>WACe001</h1>
-		<p>Patience, <span>{{trip.name}}</span>!</p>
-		Alternatively:
-		<p>Patience, <span data-ng-bind="trip.name"></span>!</p>
+		<table class="table table-responsive table-striped">
+			<tr data-ng-repeat="trip in c.trip">
+				<td data-ng-bind="trip.name"></td>
+				<td data-ng-bind="trip.createTimestamp | date:'yyyy-MM-dd'"></td>
+				<td><a href="#" class="btn btn-sm btn-primary">Manage</a></td>
+			</tr>
+		</table>
 		<form>
 			<div class="form-group">
 				<label>What time it was:</label>

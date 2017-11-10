@@ -6,10 +6,24 @@
 	{
 		"use strict";
 
+		// Define the trip controller.
 		function trip()
 		{
 			var viewModel = this;
-			viewModel.name = "[Angular Controller Name]";
+			viewModel.trip =
+				[
+					{
+						name: "Angular [A] Trip"
+						,
+						createTimestamp: new Date()
+					}
+					,
+					{
+						name: "Angular [B] Trip"
+						,
+						createTimestamp: new Date()
+					}
+				];
 		}
 
 		// Use the existing module, specify controller.
