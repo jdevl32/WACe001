@@ -1,4 +1,5 @@
-﻿@model IEnumerable<WACe001.Entity.Interface.ITrip>
+﻿@using Microsoft.AspNetCore.Hosting.Internal
+@model IEnumerable<WACe001.Entity.Interface.ITrip>
 
 @{
 	ViewBag.Title = "I'm trippin', dude!";
@@ -12,8 +13,10 @@
 }
 
 <div class="row" data-ng-app="app-trip" data-ng-controller="trip as c">
+	<input type="hidden" data-ng-model="c.isDev" value="true"/>
 	<div class="col-md-6">
 		<h1>WACe001</h1>
+		<div class="text-danger" data-ng-bind="c.errorMessage" data-ng-show="c.errorMessage"></div>
 		<table class="table table-responsive table-striped">
 			<tr data-ng-repeat="trip in c.trip">
 				<td data-ng-bind="trip.name"></td>
