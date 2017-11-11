@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using WACe001.Controller.Web.Interface;
 using WACe001.Entity;
@@ -8,9 +9,16 @@ using WACe001.ViewModel;
 namespace WACe001.Controller.Web
 {
 
+	/// <summary>
+	/// The authentication controller.
+	/// </summary>
+	/// <remarks>
+	/// Last modification:
+	/// Rebase with generic base controller.
+	/// </remarks>
 	public class AuthController
 		:
-		Microsoft.AspNetCore.Mvc.Controller
+		ControllerBase<AuthController>
 		,
 		IAuthController
 	{
@@ -24,16 +32,23 @@ namespace WACe001.Controller.Web
 
 #region Instance Initialization
 
+		/// <inheritdoc />
 		/// <summary>
 		/// Create a new authorization controller.
 		/// </summary>
+		/// <param name="logger">
+		/// The logger.
+		/// </param>
 		/// <param name="signInManager">
 		/// The sign-in manager (for traveler).
 		/// </param>
 		/// <remarks>
 		/// Last modification:
+		/// Add logger (for rebase).
 		/// </remarks>
-		public AuthController(SignInManager<Traveler> signInManager) => SignInManager = signInManager;
+		public AuthController(ILogger<AuthController> logger, SignInManager<Traveler> signInManager)
+			:
+			base(logger) => SignInManager = signInManager;
 
 #endregion
 

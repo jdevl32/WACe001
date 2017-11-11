@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
 using WACe001.Controller.Web.Interface;
 using WACe001.Repository.Interface;
 using WACe001.Service.Interface;
@@ -11,27 +10,43 @@ using WACe001.ViewModel;
 namespace WACe001.Controller.Web
 {
 
+	/// <summary>
+	/// The app controller.
+	/// </summary>
+	/// <remarks>
+	/// Last modification:
+	/// Rebase with generic base controller.
+	/// </remarks>
 	public class AppController
 		:
-		Microsoft.AspNetCore.Mvc.Controller
+		ControllerBase<AppController>
 		,
 		IAppController
 	{
 
 #region Property
 
+		/// <summary>
+		/// The configuration root.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
 		private IConfigurationRoot ConfigurationRoot { get; }
 
-		private ILogger<IAppController> Logger { get; }
-
+		/// <summary>
+		/// The mail service.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
 		private IMailService MailService { get; }
-
-		private ITravelRepository TravelRepository { get; }
 
 #endregion
 
 #region Instance Initialization
 
+		/// <inheritdoc />
 		/// <summary>
 		/// 
 		/// </summary>
@@ -51,12 +66,12 @@ namespace WACe001.Controller.Web
 		/// Last modification:
 		/// Add logger.
 		/// </remarks>
-		public AppController(IConfigurationRoot configurationRoot, ILogger<IAppController> logger, IMailService mailService, ITravelRepository travelRepository)
+		public AppController(IConfigurationRoot configurationRoot, ILogger<AppController> logger, IMailService mailService, ITravelRepository travelRepository)
+			:
+			base(logger, travelRepository)
 		{
 			ConfigurationRoot = configurationRoot;
-			Logger = logger;
 			MailService = mailService;
-			TravelRepository = travelRepository;
 		}
 
 #endregion
@@ -106,22 +121,12 @@ namespace WACe001.Controller.Web
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Move functionality from default action.
-		/// Implement authentication.
+		/// Delegate functionality to the angular controller.
 		/// </remarks>
 		[Authorize]
 		public IActionResult Trips()
 		{
-			try
-			{
-				return View(TravelRepository.GetTrips());
-			} // try
-			catch (Exception ex)
-			{
-				Logger.LogError(ex, $"Error retrieving trips:  {ex}");
-			} // catch
-
-			return Redirect("/error");
+			return View();
 		}
 
 	}

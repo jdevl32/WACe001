@@ -1,4 +1,4 @@
-// /script/controller/trip.js
+// /script/controller/trip.edit.js
 
 // Exclude from global scope.
 (
@@ -6,11 +6,11 @@
 	{
 		"use strict";
 
-		// Define the trip controller.
+		// Define the trip edit controller.
 		// Last modification:
-		// Rename.
 		function controller($http)
 		{
+			/**
 			var vm = this;
 
 			vm.isBusy = true;
@@ -116,9 +116,10 @@
 						.then(onPostSuccess, onPostError)
 						.finally(doFinally);
 				};
+			**/
 		}
 
 		// Use the existing module, specify controller.
-		angular.module("app-trip").controller("trip", controller);
+		angular.module("app-trip").controller("tripEdit", controller);
 	}
 )();

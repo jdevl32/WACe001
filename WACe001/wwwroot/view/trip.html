@@ -9,7 +9,7 @@
 			<tr data-ng-repeat="trip in vm.trip">
 				<td data-ng-bind="trip.name"></td>
 				<td data-ng-bind="trip.createTimestamp | date:'yyyy-MM-dd'"></td>
-				<td><a href="#" class="btn btn-sm btn-primary">Manage</a></td>
+				<td><a href="/#/edit" class="btn btn-sm btn-primary">Manage</a></td>
 			</tr>
 		</table>
 		<form name="newTrip" novalidate data-ng-submit="vm.AddTrip()">
@@ -21,19 +21,6 @@
 			</div>
 			<div class="form-group">
 				<input class="btn btn-primary" type="submit" value="Add Trip" data-ng-disabled="newTrip.$invalid" />
-			</div>
-		</form>
-		<form>
-			<div class="form-group">
-				<label for="arrival">What time it was:</label>
-				<input class="form-control" type="text" id="arrival" name="arrival" />
-			</div>
-			<div class="form-group">
-				<label for="stop">Where it was:</label>
-				<input class="form-control" type="text" id="stop" name="stop" />
-			</div>
-			<div class="form-group">
-				<input class="btn btn-primary" type="submit" value="Add it!" />
 			</div>
 		</form>
 	</div>

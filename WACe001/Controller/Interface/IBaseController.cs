@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using WACe001.Repository.Interface;
 
-namespace WACe001.Controller.Api.Interface
+namespace WACe001.Controller.Interface
 {
 
 	/// <summary>
@@ -9,10 +9,9 @@ namespace WACe001.Controller.Api.Interface
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Remove REST action implementations.
-	/// Add hosting environment and travel repository properties.
+	/// Refactor (rename, move and rebase).
 	/// </remarks>
-	public interface IApiController
+	public interface IBaseController
 	{
 
 #region Property

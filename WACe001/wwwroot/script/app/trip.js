@@ -8,10 +8,11 @@
 
 		// Configure routing.
 		// Last modification:
-		// Add otherwise redirection.
+		// Add trip edit route configuration.
 		function configRoute($routeProvider)
 		{
 			$routeProvider
+				// Trip route configuration.
 				.when
 					(
 						"/"
@@ -21,9 +22,23 @@
 							,
 							controllerAs: "vm"
 							,
-							templateUrl: "/view/trips.html"
+							templateUrl: "/view/trip.html"
 						}
 					)
+				// Trip edit route configuration.
+				.when
+					(
+						"/edit"
+						,
+						{
+							controller: "tripEdit"
+							,
+							controllerAs: "vm"
+							,
+							templateUrl: "/view/trip.edit.html"
+						}
+					)
+				// Default route configuration.
 				.otherwise({redirectTo: "/"});
 		}
 

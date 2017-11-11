@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -18,13 +19,14 @@ namespace WACe001.Controller.Api
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Re-implement with generic base class.
+	/// Refactor authorization (from base class).
 	/// </remarks>
+	[Authorize]
 	[Produces("application/json")]
 	[Route("api/trip")]
 	public class TripController
 		:
-		ApiControllerBase<TripController>
+		ControllerBase<TripController>
 		,
 		ITripController
 	{
