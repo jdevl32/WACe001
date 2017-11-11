@@ -124,9 +124,23 @@ namespace WACe001.Entity
 #region Object
 
 		/// <inheritdoc />
-		public override string ToString() => $"[{nameof(Id)}={Id}|{nameof(Name)}={Name}|{nameof(CreateTimestamp)}={CreateTimestamp}|{nameof(UserName)}={UserName}|{nameof(Stops)}.{nameof(Stops.Count)}={Stops.Count}]";
+		/// <remarks>
+		/// Last modification:
+		/// Verify valid stops.
+		/// </remarks>
+		public override string ToString()
+		{
+			var stopCount = string.Empty;
 
-#endregion
+			if (null != Stops)
+			{
+				stopCount = $"|{nameof(Stops)}.{nameof(Stops.Count)}={Stops.Count}";
+			} // if
+
+			return $"[{nameof(Id)}={Id}|{nameof(Name)}={Name}|{nameof(CreateTimestamp)}={CreateTimestamp}|{nameof(UserName)}={UserName}{stopCount}]";
+		}
+
+		#endregion
 
 	}
 

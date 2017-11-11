@@ -25,8 +25,8 @@
 			// Create empty container for new trip.
 			viewModel.newTrip = {};
 
-			// Create success handler.
-			var onSuccess =
+			// Create success handler for GET.
+			var onGetSuccess =
 				function(response)
 				{
 					// todo|jdevl32: make this global method...
@@ -58,11 +58,29 @@
 					angular.copy(response.data, viewModel.trip);
 				};
 
-			// Create error handler.
-			var onError =
+			// Create error handler for GET.
+			var onGetError =
 				function(error)
 				{
 					viewModel.errorMessage = "Failed to get trips:  " + error;
+				};
+
+			// Create success handler for POST.
+			var onPostSuccess =
+				function(response)
+				{
+					// Add new trip to the container.
+					viewModel.trip.push(response.data);
+
+					// Clear/reset new trip (form).
+					viewModel.newTrip = {};
+				};
+
+			// Create error handler for POST.
+			var onPostError =
+				function(error)
+				{
+					viewModel.errorMessage = "Failed to save trip:  " + error;
 				};
 
 			// Create finally handler.
@@ -76,7 +94,9 @@
 			try
 			{
 				// Get the set of trips from the API, using the defined handlers.
-				$http.get("/api/trip").then(onSuccess, onError).finally(doFinally);
+				$http.get("/api/trip")
+					.then(onGetSuccess, onGetError)
+					.finally(doFinally);
 			} // try
 			catch (e)
 			{
@@ -88,18 +108,13 @@
 			viewModel.AddTrip =
 				function()
 				{
-					// Add new trip to the container.
-					viewModel.trip.push
-						(
-							{
-								name: viewModel.newTrip.name
-								,
-								createTimestamp: new Date()
-							}
-						);
+					viewModel.isBusy = true;
+					viewModel.errorMessage = "";
 
-					// Clear/reset new trip (form).
-					viewModel.newTrip = {};
+					// Post the new trip to the API, using the defined handlers.
+					$http.post("/api/trip", viewModel.newTrip)
+						.then(onPostSuccess, onPostError)
+						.finally(doFinally);
 				};
 		}
 
