@@ -7,50 +7,14 @@
 @section Script
 {
 	<script src="~/lib/angular/angular.min.js"></script>
+	<script src="~/lib/angular-route/angular-route.min.js"></script>
 	<script src="~/script/directive/spinner.js"></script>
 	<script src="~/script/app/trip.js"></script>
 	<script src="~/script/controller/trip.js"></script>
 }
 
-<div class="row" data-ng-app="app-trip" data-ng-controller="trip as vm">
-	<!-- todo|jdevl32: fix (not working) !!! -->
-	<input id="isDev" name="isDev" type="hidden" data-ng-model="vm.isDev" value="true"/>
-	<div class="col-md-6">
-		<h1>WACe001</h1>
-		<spinner while="vm.isBusy">Loading trip(s)...</spinner>
-		<div class="text-danger" data-ng-bind="vm.errorMessage" data-ng-show="vm.errorMessage"></div>
-		<table class="table table-responsive table-striped">
-			<tr data-ng-repeat="trip in vm.trip">
-				<td data-ng-bind="trip.name"></td>
-				<td data-ng-bind="trip.createTimestamp | date:'yyyy-MM-dd'"></td>
-				<td><a href="#" class="btn btn-sm btn-primary">Manage</a></td>
-			</tr>
-		</table>
-		<form name="newTrip" novalidate data-ng-submit="vm.AddTrip()">
-			<div class="form-group">
-				<label for="name">Trip Name:</label>
-				<input class="form-control" type="text" id="name" name="name" data-ng-model="vm.newTrip.name" required data-ng-minlength="1"/>
-				<span data-ng-show="newTrip.name.$error.required" class="text-warning">Give it a name!</span>
-				<span data-ng-show="newTrip.name.$error.minlength" class="text-warning">Keep typing!</span>
-			</div>
-			<div class="form-group">
-				<input class="btn btn-primary" type="submit" value="Add Trip" data-ng-disabled="newTrip.$invalid"/>
-			</div>
-		</form>
-		<form>
-			<div class="form-group">
-				<label for="arrival">What time it was:</label>
-				<input class="form-control" type="text" id="arrival" name="arrival"/>
-			</div>
-			<div class="form-group">
-				<label for="stop">Where it was:</label>
-				<input class="form-control" type="text" id="stop" name="stop"/>
-			</div>
-			<div class="form-group">
-				<input class="btn btn-primary" type="submit" value="Add it!"/>
-			</div>
-		</form>
-	</div>
+<div class="row" data-ng-app="app-trip">
+	<div data-ng-view></div>
 	<div class="col-md-6">
 		<h2>What went down</h2>
 		<ul>

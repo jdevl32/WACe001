@@ -7,20 +7,24 @@
 		"use strict";
 
 		// Configure routing.
+		// Last modification:
+		// Add otherwise redirection.
 		function configRoute($routeProvider)
 		{
-			$routeProvider.when
-				(
-					"/"
-					,
-					{
-						controller: "trip"
+			$routeProvider
+				.when
+					(
+						"/"
 						,
-						controllerAs: "vm"
-						,
-						templateUrl: "/view/trips.html"
-					}
-				);
+						{
+							controller: "trip"
+							,
+							controllerAs: "vm"
+							,
+							templateUrl: "/view/trips.html"
+						}
+					)
+				.otherwise({redirectTo: "/"});
 		}
 
 		// Create the module.
