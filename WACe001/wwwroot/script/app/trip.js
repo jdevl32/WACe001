@@ -6,9 +6,26 @@
 	{
 		"use strict";
 
+		// Configure routing.
+		function configRoute($routeProvider)
+		{
+			$routeProvider.when
+				(
+					"/"
+					,
+					{
+						controller: "trip"
+						,
+						controllerAs: "vm"
+						,
+						templateUrl: "/view/trips.html"
+					}
+				);
+		}
+
 		// Create the module.
 		// Last modification:
-		// Add dependency on spinner directive.
-		angular.module("app-trip", ["spinner"]);
+		// Add dependency on routing.
+		angular.module("app-trip", ["spinner", "ngRoute"]).config(configRoute);
 	}
 )();

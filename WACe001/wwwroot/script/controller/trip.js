@@ -11,19 +11,19 @@
 		// Add the http service dependency.
 		function trip($http)
 		{
-			var viewModel = this;
+			var vm = this;
 
-			viewModel.isBusy = true;
-			viewModel.isDev = false;
+			vm.isBusy = true;
+			vm.isDev = false;
 
 			// Create empty container for error message.
-			viewModel.errorMessage = "";
+			vm.errorMessage = "";
 
 			// Create empty container for trip(s).
-			viewModel.trip = [];
+			vm.trip = [];
 
 			// Create empty container for new trip.
-			viewModel.newTrip = {};
+			vm.newTrip = {};
 
 			// Create success handler for GET.
 			var onGetSuccess =
@@ -31,7 +31,7 @@
 				{
 					// todo|jdevl32: make this global method...
 					// todo|jdevl32: fix (is-dev not working) !!!
-					if (viewModel.isDev)
+					if (vm.isDev)
 					{
 						var x = "[response=";
 
@@ -55,14 +55,14 @@
 						alert(x);
 					} // if
 
-					angular.copy(response.data, viewModel.trip);
+					angular.copy(response.data, vm.trip);
 				};
 
 			// Create error handler for GET.
 			var onGetError =
 				function(error)
 				{
-					viewModel.errorMessage = "Failed to get trips:  " + error;
+					vm.errorMessage = "Failed to get trips:  " + error;
 				};
 
 			// Create success handler for POST.
@@ -70,17 +70,17 @@
 				function(response)
 				{
 					// Add new trip to the container.
-					viewModel.trip.push(response.data);
+					vm.trip.push(response.data);
 
 					// Clear/reset new trip (form).
-					viewModel.newTrip = {};
+					vm.newTrip = {};
 				};
 
 			// Create error handler for POST.
 			var onPostError =
 				function(error)
 				{
-					viewModel.errorMessage = "Failed to save trip:  " + error;
+					vm.errorMessage = "Failed to save trip:  " + error;
 				};
 
 			// Create finally handler.
@@ -88,7 +88,7 @@
 				function()
 				{
 					// Reset busy flag.
-					viewModel.isBusy = false;
+					vm.isBusy = false;
 				};
 
 			try
@@ -100,19 +100,19 @@
 			} // try
 			catch (e)
 			{
-				viewModel.isBusy = false;
-				viewModel.errorMessage = "Failed to get trips:  " + e;
+				vm.isBusy = false;
+				vm.errorMessage = "Failed to get trips:  " + e;
 			} // catch
 
 			// Form submit handler.
-			viewModel.AddTrip =
+			vm.AddTrip =
 				function()
 				{
-					viewModel.isBusy = true;
-					viewModel.errorMessage = "";
+					vm.isBusy = true;
+					vm.errorMessage = "";
 
 					// Post the new trip to the API, using the defined handlers.
-					$http.post("/api/trip", viewModel.newTrip)
+					$http.post("/api/trip", vm.newTrip)
 						.then(onPostSuccess, onPostError)
 						.finally(doFinally);
 				};
