@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Hosting.Internal
-@model IEnumerable<WACe001.Entity.Interface.ITrip>
+﻿@model IEnumerable<WACe001.Entity.Interface.ITrip>
 
 @{
 	ViewBag.Title = "I'm trippin', dude!";
@@ -8,6 +7,7 @@
 @section Script
 {
 	<script src="~/lib/angular/angular.min.js"></script>
+	<script src="~/script/directive/spinner.js"></script>
 	<script src="~/script/app/trip.js"></script>
 	<script src="~/script/controller/trip.js"></script>
 }
@@ -17,10 +17,7 @@
 	<input id="isDev" name="isDev" type="hidden" data-ng-model="c.isDev" value="true"/>
 	<div class="col-md-6">
 		<h1>WACe001</h1>
-		<div class="text-center" data-ng-show="c.isBusy">
-			<i class="fa fa-spinner fa-spin"></i>
-			Loading trip(s)...
-		</div>
+		<spinner while="c.isBusy">Loading trip(s)...</spinner>
 		<div class="text-danger" data-ng-bind="c.errorMessage" data-ng-show="c.errorMessage"></div>
 		<table class="table table-responsive table-striped">
 			<tr data-ng-repeat="trip in c.trip">

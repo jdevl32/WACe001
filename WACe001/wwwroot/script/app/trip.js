@@ -7,6 +7,8 @@
 		"use strict";
 
 		// Create the module.
-		angular.module("app-trip", []);
+		// Last modification:
+		// Add dependency on spinner directive.
+		angular.module("app-trip", ["spinner"]);
 	}
 )();
