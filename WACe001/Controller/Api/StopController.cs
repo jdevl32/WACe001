@@ -69,6 +69,18 @@ namespace WACe001.Controller.Api
 		{
 			return null;
 		}
+
+		// PUT: api/Stop/5
+		[HttpPut("{id}")]
+		public void Put(int id, [FromBody]string value)
+		{
+		}
+		
+		// DELETE: api/ApiWithActions/5
+		[HttpDelete("{id}")]
+		public void Delete(int id)
+		{
+		}
 #endif
 
 		/// <inheritdoc />
@@ -156,18 +168,6 @@ namespace WACe001.Controller.Api
 			} // catch
 
 			return BadRequest();
-		}
-		
-		// PUT: api/Stop/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody]string value)
-		{
-		}
-		
-		// DELETE: api/ApiWithActions/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
 		}
 
 	}
