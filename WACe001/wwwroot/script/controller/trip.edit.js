@@ -6,6 +6,8 @@
 	{
 		"use strict";
 
+		// Call plugin to create visual map (based on Google maps and using that API).
+		// Last modification:
 		function _showMap(items)
 		{
 			if (isNullOrUndefined(items))
@@ -15,10 +17,29 @@
 
 			if (items.length > 0)
 			{
+				// Use underscore library for mapping.
+				var map = _.map
+					(
+						// Collection of stops.
+						items
+						,
+						// Map item (stop) to object expected for travel-map.
+						function(item)
+						{
+							return {
+								lat: item.coordinate.latitude
+								,
+								long: item.coordinate.longitude
+								,
+								info: item.name
+							};
+						}
+					);
+
 				travelMap.createMap
 					(
 						{
-							stops: items
+							stops: map
 							,
 							selector: "#map"
 							,
@@ -33,7 +54,7 @@
 		// Define the trip edit controller.
 		// Last modification:
 		// Implement travel map.
-		function controller($routeParams)
+		function controller($routeParams, $http)
 		{
 			var vm = this;
 			vm.name = $routeParams.name;
@@ -42,18 +63,13 @@
 
 			// Create empty container for error message.
 			vm.errorMessage = "";
-			//vm.errorMessage = "[Error Message]";
 
 			// Create empty container for stop(s).
 			vm.stop = [];
 
-			/**
-			// Create empty container for new trip.
-			vm.newTrip = {};
-
 			// Create success handler for GET.
 			var onGetSuccess =
-				function(response)
+				function (response)
 				{
 					// todo|jdevl32: make this global method...
 					// todo|jdevl32: fix (is-dev not working) !!!
@@ -81,37 +97,21 @@
 						alert(x);
 					} // if
 
-					angular.copy(response.data, vm.trip);
+					angular.copy(response.data, vm.stop);
+					// todo|jdevl32: fix (travel-map is not working) !!!
+					//_showMap(vm.stop);
 				};
 
 			// Create error handler for GET.
 			var onGetError =
-				function(error)
+				function (error)
 				{
-					vm.errorMessage = "Failed to get trips:  " + error;
-				};
-
-			// Create success handler for POST.
-			var onPostSuccess =
-				function(response)
-				{
-					// Add new trip to the container.
-					vm.trip.push(response.data);
-
-					// Clear/reset new trip (form).
-					vm.newTrip = {};
-				};
-
-			// Create error handler for POST.
-			var onPostError =
-				function(error)
-				{
-					vm.errorMessage = "Failed to save trip:  " + error;
+					vm.errorMessage = "Failed to get stops:  " + error;
 				};
 
 			// Create finally handler.
 			var doFinally =
-				function()
+				function ()
 				{
 					// Reset busy flag.
 					vm.isBusy = false;
@@ -119,16 +119,38 @@
 
 			try
 			{
-				// Get the set of trips from the API, using the defined handlers.
-				$http.get("/api/trip")
+				// Get the set of stops from the API, using the defined handlers.
+				$http.get("/api/trip/" + vm.name + "/stop")
 					.then(onGetSuccess, onGetError)
 					.finally(doFinally);
 			} // try
 			catch (e)
 			{
 				vm.isBusy = false;
-				vm.errorMessage = "Failed to get trips:  " + e;
+				vm.errorMessage = "Failed to get stops:  " + e;
 			} // catch
+
+			/**
+			// Create empty container for new stop.
+			vm.newStop = {};
+
+			// Create success handler for POST.
+			var onPostSuccess =
+				function(response)
+				{
+					// Add new stop to the container.
+					vm.stop.push(response.data);
+
+					// Clear/reset new stop (form).
+					vm.newStop = {};
+				};
+
+			// Create error handler for POST.
+			var onPostError =
+				function(error)
+				{
+					vm.errorMessage = "Failed to save stop:  " + error;
+				};
 
 			// Form submit handler.
 			vm.AddTrip =
@@ -137,8 +159,8 @@
 					vm.isBusy = true;
 					vm.errorMessage = "";
 
-					// Post the new trip to the API, using the defined handlers.
-					$http.post("/api/trip", vm.newTrip)
+					// Post the new stop to the API, using the defined handlers.
+					$http.post("/api/trip", vm.newStop)
 						.then(onPostSuccess, onPostError)
 						.finally(doFinally);
 				};

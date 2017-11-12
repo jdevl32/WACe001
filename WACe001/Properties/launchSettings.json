@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/WACe001",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:59708/",
       "sslPort": 0
@@ -16,7 +20,7 @@
       }
     },
     "WACe001": {
-      "commandName": "Project",
+      "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
         "Contact__Email__To": "over@ride.com",
