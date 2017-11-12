@@ -8,20 +8,21 @@
 
 		// Define the trip edit controller.
 		// Last modification:
-		function controller($http)
+		function controller($routeParams)
 		{
-			/**
 			var vm = this;
-
+			vm.name = $routeParams.name;
 			vm.isBusy = true;
 			vm.isDev = false;
 
 			// Create empty container for error message.
 			vm.errorMessage = "";
+			//vm.errorMessage = "[Error Message]";
 
-			// Create empty container for trip(s).
-			vm.trip = [];
+			// Create empty container for stop(s).
+			vm.stop = [];
 
+			/**
 			// Create empty container for new trip.
 			vm.newTrip = {};
 

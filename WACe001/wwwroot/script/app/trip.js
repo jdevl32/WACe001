@@ -28,7 +28,7 @@
 				// Trip edit route configuration.
 				.when
 					(
-						"/edit"
+						"/edit/:name"
 						,
 						{
 							controller: "tripEdit"

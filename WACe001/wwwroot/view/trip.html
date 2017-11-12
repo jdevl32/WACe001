@@ -9,7 +9,7 @@
 			<tr data-ng-repeat="trip in vm.trip">
 				<td data-ng-bind="trip.name"></td>
 				<td data-ng-bind="trip.createTimestamp | date:'yyyy-MM-dd'"></td>
-				<td><a href="#!/edit" class="btn btn-sm btn-primary">Manage</a></td>
+				<td><a data-ng-href="#!/edit/{{trip.name}}" class="btn btn-sm btn-primary">Manage</a></td>
 			</tr>
 		</table>
 		<form name="newTrip" novalidate data-ng-submit="vm.AddTrip()">

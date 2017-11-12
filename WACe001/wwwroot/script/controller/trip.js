@@ -12,7 +12,6 @@
 		function controller($http)
 		{
 			var vm = this;
-
 			vm.isBusy = true;
 			vm.isDev = false;
 

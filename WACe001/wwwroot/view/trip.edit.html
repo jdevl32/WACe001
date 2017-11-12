@@ -1,6 +1,26 @@
 ﻿<div>
-	<a href="#!/" class="btn btn-sm btn-default"><i class="fa fa-angle-left"></i> Back</a>
-	<div class="col-md-6">
+	<div class="col-md-12">
+		<a href="#!/" class="btn btn-sm btn-default"><i class="fa fa-angle-left"></i> Back</a>
+	</div>
+	<div class="col-md-3">
+		<h2 data-ng-bind="vm.name"></h2>
+		<spinner while="vm.isBusy">Loading stop(s)...</spinner>
+		<div class="alert alert-danger" data-ng-bind="vm.errorMessage" data-ng-show="vm.errorMessage"></div>
+		<table class="table table-responsive table-striped">
+			<thead>
+				<tr>
+					<th>Location</th>
+					<th>Arrival</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="stop in vm.stop">
+					<td data-ng-bind="stop.name"></td>
+					<td data-ng-bind="stop.arrival | date:'yyyy-MM-dd'"></td>
+					<!--<td><a data-ng-href="#!/edit/{{trip.name}}" class="btn btn-sm btn-primary">Manage</a></td>-->
+				</tr>
+			</tbody>
+		</table>
 		<form>
 			<div class="form-group">
 				<label for="arrival">What time it was:</label>
@@ -15,8 +35,8 @@
 			</div>
 		</form>
 	</div>
-	<div class="col-md-6">
-		<h2>What went down</h2>
+	<div class="col-md-9">
+		<h3>What went down</h3>
 		<ul>
 			<li>Used to be some trips here...</li>
 		</ul>
