@@ -6,7 +6,7 @@
 		<h2 data-ng-bind="vm.name"></h2>
 		<spinner while="vm.isBusy">Loading stop(s)...</spinner>
 		<div class="alert alert-danger" data-ng-bind="vm.errorMessage" data-ng-show="vm.errorMessage"></div>
-		<form name="new" novalidate data-ng-submit="onSubmit()">
+		<form name="new" novalidate data-ng-submit="vm.onSubmit()">
 			<div class="form-group">
 				<label for="name">Where d'ya go?</label>
 				<input class="form-control" type="text" id="name" name="name" data-ng-model="vm.new.name" required data-ng-minlength="1"/>

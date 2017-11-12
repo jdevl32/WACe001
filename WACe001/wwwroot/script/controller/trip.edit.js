@@ -117,10 +117,14 @@
 					vm.isBusy = false;
 				};
 
+			var url = "/api/trip/" + vm.name + "/stop";
+
 			try
 			{
-				// Get the set of stops from the API, using the defined handlers.
-				$http.get("/api/trip/" + vm.name + "/stop")
+				$http
+					// Get the set of stops from the API...
+					.get(url)
+					// ...Using the defined handlers.
 					.then(onGetSuccess, onGetError)
 					.finally(doFinally);
 			} // try
@@ -133,13 +137,14 @@
 			// Create empty container for new stop.
 			vm.new = {};
 
-			/**
 			// Create success handler for POST.
 			var onPostSuccess =
 				function(response)
 				{
 					// Add new stop to the container.
 					vm.stop.push(response.data);
+					// todo|jdevl32: fix (travel-map is not working) !!!
+					//_showMap(vm.stop);
 
 					// Clear/reset new stop (form).
 					vm.new = {};
@@ -159,12 +164,13 @@
 					vm.isBusy = true;
 					vm.errorMessage = "";
 
-					// Post the new stop to the API, using the defined handlers.
-					$http.post("/api/trip", vm.new)
+					$http
+						// Post the new stop to the API...
+						.post(url, vm.new)
+						// ...Using the defined handlers.
 						.then(onPostSuccess, onPostError)
 						.finally(doFinally);
 				};
-			**/
 		}
 
 		// Use the existing module, specify controller.

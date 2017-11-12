@@ -69,10 +69,14 @@
 					vm.isBusy = false;
 				};
 
+			var url = "/api/trip";
+
 			try
 			{
-				// Get the set of trips from the API, using the defined handlers.
-				$http.get("/api/trip")
+				$http
+					// Get the set of trips from the API...
+					.get(url)
+					// ...Using the defined handlers.
 					.then(onGetSuccess, onGetError)
 					.finally(doFinally);
 			} // try
@@ -110,8 +114,10 @@
 					vm.isBusy = true;
 					vm.errorMessage = "";
 
-					// Post the new trip to the API, using the defined handlers.
-					$http.post("/api/trip", vm.new)
+					$http
+						// Post the new trip to the API...
+						.post(url, vm.new)
+						// ...Using the defined handlers.
 						.then(onPostSuccess, onPostError)
 						.finally(doFinally);
 				};
