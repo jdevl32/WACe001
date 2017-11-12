@@ -130,10 +130,10 @@
 				vm.errorMessage = "Failed to get stops:  " + e;
 			} // catch
 
-			/**
 			// Create empty container for new stop.
-			vm.newStop = {};
+			vm.new = {};
 
+			/**
 			// Create success handler for POST.
 			var onPostSuccess =
 				function(response)
@@ -142,7 +142,7 @@
 					vm.stop.push(response.data);
 
 					// Clear/reset new stop (form).
-					vm.newStop = {};
+					vm.new = {};
 				};
 
 			// Create error handler for POST.
@@ -153,14 +153,14 @@
 				};
 
 			// Form submit handler.
-			vm.AddTrip =
+			vm.onSubmit =
 				function()
 				{
 					vm.isBusy = true;
 					vm.errorMessage = "";
 
 					// Post the new stop to the API, using the defined handlers.
-					$http.post("/api/trip", vm.newStop)
+					$http.post("/api/trip", vm.new)
 						.then(onPostSuccess, onPostError)
 						.finally(doFinally);
 				};

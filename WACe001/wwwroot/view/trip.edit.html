@@ -6,6 +6,24 @@
 		<h2 data-ng-bind="vm.name"></h2>
 		<spinner while="vm.isBusy">Loading stop(s)...</spinner>
 		<div class="alert alert-danger" data-ng-bind="vm.errorMessage" data-ng-show="vm.errorMessage"></div>
+		<form name="new" novalidate data-ng-submit="onSubmit()">
+			<div class="form-group">
+				<label for="name">Where d'ya go?</label>
+				<input class="form-control" type="text" id="name" name="name" data-ng-model="vm.new.name" required data-ng-minlength="1"/>
+				<span data-ng-show="new.name.$error.required" class="text-warning">Give it a name!</span>
+				<span data-ng-show="new.name.$error.minlength" class="text-warning">Keep typing!</span>
+			</div>
+			<div class="form-group">
+				<label for="arrival">When d'ya get there?</label>
+				<input class="form-control" type="text" id="arrival" name="arrival" data-ng-model="vm.new.arrival" required data-ng-minlength="1"/>
+				<span data-ng-show="new.arrival.$error.required" class="text-warning">Required.</span>
+				<!--todo|jdevl32: pattern match validation for date !!!-->
+				<span data-ng-show="new.arrival.$error.minlength" class="text-warning">Keep typing!</span>
+			</div>
+			<div class="form-group">
+				<input class="btn btn-primary" type="submit" value="Add Stop" data-ng-disabled="new.$invalid" />
+			</div>
+		</form>
 		<table class="table table-responsive table-striped">
 			<thead>
 				<tr>
@@ -21,22 +39,9 @@
 				</tr>
 			</tbody>
 		</table>
-		<form>
-			<div class="form-group">
-				<label for="arrival">What time it was:</label>
-				<input class="form-control" type="text" id="arrival" name="arrival"/>
-			</div>
-			<div class="form-group">
-				<label for="stop">Where it was:</label>
-				<input class="form-control" type="text" id="stop" name="stop"/>
-			</div>
-			<div class="form-group">
-				<input class="btn btn-primary" type="submit" value="Add it!"/>
-			</div>
-		</form>
 	</div>
 	<div class="col-md-9">
-		<h3>Where you've been</h3>
-		<div id="map"></div>
+		<h3>Oh, the places you've been!</h3>
+		<div id="map">[To be filled with map data...]</div>
 	</div>
 </div>

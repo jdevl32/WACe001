@@ -12,15 +12,15 @@
 				<td><a data-ng-href="#!/edit/{{trip.name}}" class="btn btn-sm btn-primary">Manage</a></td>
 			</tr>
 		</table>
-		<form name="newTrip" novalidate data-ng-submit="vm.AddTrip()">
+		<form name="new" novalidate data-ng-submit="vm.onSubmit()">
 			<div class="form-group">
 				<label for="name">Trip Name:</label>
-				<input class="form-control" type="text" id="name" name="name" data-ng-model="vm.newTrip.name" required data-ng-minlength="1" />
-				<span data-ng-show="newTrip.name.$error.required" class="text-warning">Give it a name!</span>
-				<span data-ng-show="newTrip.name.$error.minlength" class="text-warning">Keep typing!</span>
+				<input class="form-control" type="text" id="name" name="name" data-ng-model="vm.new.name" required data-ng-minlength="1" />
+				<span data-ng-show="new.name.$error.required" class="text-warning">Give it a name!</span>
+				<span data-ng-show="new.name.$error.minlength" class="text-warning">Keep typing!</span>
 			</div>
 			<div class="form-group">
-				<input class="btn btn-primary" type="submit" value="Add Trip" data-ng-disabled="newTrip.$invalid" />
+				<input class="btn btn-primary" type="submit" value="Add Trip" data-ng-disabled="new.$invalid" />
 			</div>
 		</form>
 	</div>

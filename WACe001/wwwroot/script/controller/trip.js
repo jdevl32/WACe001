@@ -21,9 +21,6 @@
 			// Create empty container for trip(s).
 			vm.trip = [];
 
-			// Create empty container for new trip.
-			vm.newTrip = {};
-
 			// Create success handler for GET.
 			var onGetSuccess =
 				function(response)
@@ -64,24 +61,6 @@
 					vm.errorMessage = "Failed to get trips:  " + error;
 				};
 
-			// Create success handler for POST.
-			var onPostSuccess =
-				function(response)
-				{
-					// Add new trip to the container.
-					vm.trip.push(response.data);
-
-					// Clear/reset new trip (form).
-					vm.newTrip = {};
-				};
-
-			// Create error handler for POST.
-			var onPostError =
-				function(error)
-				{
-					vm.errorMessage = "Failed to save trip:  " + error;
-				};
-
 			// Create finally handler.
 			var doFinally =
 				function()
@@ -103,15 +82,36 @@
 				vm.errorMessage = "Failed to get trips:  " + e;
 			} // catch
 
+			// Create empty container for new trip.
+			vm.new = {};
+
+			// Create success handler for POST.
+			var onPostSuccess =
+				function(response)
+				{
+					// Add new trip to the container.
+					vm.trip.push(response.data);
+
+					// Clear/reset new trip (form).
+					vm.new = {};
+				};
+
+			// Create error handler for POST.
+			var onPostError =
+				function(error)
+				{
+					vm.errorMessage = "Failed to save trip:  " + error;
+				};
+
 			// Form submit handler.
-			vm.AddTrip =
+			vm.onSubmit =
 				function()
 				{
 					vm.isBusy = true;
 					vm.errorMessage = "";
 
 					// Post the new trip to the API, using the defined handlers.
-					$http.post("/api/trip", vm.newTrip)
+					$http.post("/api/trip", vm.new)
 						.then(onPostSuccess, onPostError)
 						.finally(doFinally);
 				};
