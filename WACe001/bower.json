@@ -10,7 +10,8 @@
     "font-awesome": "Font-Awesome#v4.7.0",
     "bootswatch": "v3.3.7",
     "angular": "v1.6.7-build.5497+sha.f876ab7",
-    "angular-route": "v1.6.7-build.5496+sha.181ac0b"
+    "angular-route": "v1.6.7-build.5496+sha.181ac0b",
+    "travelMap": "travelmap#1.0.2"
   },
   "resolutions": {
     "jquery": "3.2.1",
